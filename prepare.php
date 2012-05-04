@@ -11,6 +11,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<link rel="stylesheet" href="style.css" />
 		<link rel="stylesheet" href="prepare_style.css" />
 		<script src="jquery-1.7.1.min.js"></script>
 		<script src="toolbox.js"></script>
