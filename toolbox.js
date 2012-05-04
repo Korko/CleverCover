@@ -82,14 +82,14 @@ var lock = (function() {
 })();
 
 // File upload via iframe.
-// @params (form id, callback)
-function fuajax(i, cb) {
+// @params (form, callback)
+function fuajax(f, cb) {
 	var d = 'fu' + rd(999);
 	var e = c('iframe', {
 		name : d
 	});
 	hide(e);
-	$(i).setAttribute('target', d);
+	f.setAttribute('target', d);
 	e.onload = function() {
 		cb(e.contentWindow.document.body.innerHTML);
 		e.parentNode.removeChild(e);

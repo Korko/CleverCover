@@ -97,8 +97,8 @@ jQuery.fn.extend({
 		};
 
 		// if we choose url, we do not have to generate one
-		if(params['origin'] === 'upload') {
-			fuajax('#timeline .step.active form.upload_picture', function(url) {
+		if(params[field+'_origin'] === 'upload') {
+			fuajax(jQuery('#timeline .step.active form.upload_picture')[0], function(url) {
 				callback.apply(this, [url]);
 			}.bind(this));
 		}

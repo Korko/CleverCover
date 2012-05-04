@@ -49,7 +49,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			<script id="template_linked_image" type="template/html">
 				<p class="description">Select the image you want in your cover and in your avatar</p>
 				<div class="content">
-					<form action="http://imageshack.us/redirect_api.php" class="upload_picture" enctype="multipart/form-data" method="post" onsubmit="callback('linked_image', event); return false;">
+					<form action="http://imageshack.us/redirect_api.php" class="upload_picture" enctype="multipart/form-data" method="post" onsubmit="return callback('linked_image', event);">
 						<div class="select_images">
 							<span>
 								<label for="picture_url">
