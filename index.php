@@ -121,6 +121,7 @@
 
 			.upload_fields {
 				display: none;
+				margin-top: 10px;
 			}
 
 			#overlay {
@@ -256,6 +257,17 @@
 						return false;
 					}
 				};
+
+				// Workaround against FF bug with click on a input[type=file] label
+				$(function() {
+					if($.browser.mozilla) {
+						$('label').live('click', function(event) {
+							if(event.target === this) {
+								$('#'+ $(this).attr('for')).extend($('input', this)).filter('[type="file"]').first().click();
+							}
+						})
+					}
+				});
 			})(jQuery);
 		</script>
 	</head>
