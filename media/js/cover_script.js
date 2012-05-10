@@ -9,10 +9,9 @@
  */
 
 // TODO :
-// Choix Facebook / G+
 // Possibilité 2 images
 // ++ Changer directement sur FB ou G+
-// ++ Utiliser ctx.setTransform plutôt que de redimensionner l'image (optique webGL)
+// ++ Pouvoir tourner l'image
 
 // required : width, height, id
 var ResizableCanvas = (function() {
@@ -40,7 +39,7 @@ var ResizableCanvas = (function() {
 		this._img = null;
 		this._x = 0;
 		this._y = 0;
-		this._ratio = 0;
+		this._ratio = 100;
 		this._minRatio = 0;
 		this._opacity = 1;
 		this._flipFactor = 1;
@@ -151,7 +150,7 @@ var ResizableCanvas = (function() {
 			this._img = loadImg(url, function() {
 				var success = true;
 				if(this._img.naturalWidth < this._fullWidth || this._img.naturalHeight < this._fullHeight) {
-					alert('This picture is too small. Need at least ' + this._fullWidth + 'x' + this._fullHeight + 'pixels.');
+					alert('This picture is too small. Need at least ' + this._fullWidth + 'x' + this._fullHeight + 'pixels (got ' + this._img.naturalWidth + 'x' + this._img.naturalHeight+').');
 					success = false;
 				} else {
 					this._minRatio = Math.max(this._fullWidth / this._img.naturalWidth, this._fullHeight / this._img.naturalHeight) * 100;
@@ -198,7 +197,7 @@ var ResizableCanvas = (function() {
 		};
 
 		this.save = function(toId) {
-			this._propagate(function() {
+			return this._propagate(function() {
 				var saveCanvas = $(this._id);
 
 				if(this._extractWidth !== this._width || this._extractHeight !== this._height) {
@@ -218,13 +217,16 @@ var ResizableCanvas = (function() {
 				// L'image de la couverture que nous pourrons sauvegarder est en fait une chaîne sous forme base64
 				// e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAgA...
 				// Fonctionnalité permise par un canvas si l'origine de l'image est sûre (même domaine) d'où le fichier php "img.php" plus bas
-				var node = toId ? $(toId) : $(this._id).parentNode;
+				var node = toId ? $(toId) : c('div');
 				if(node.nodeName !== 'IMG') {
 					var parent = node;
 					node = c('img');
+					node.style.height = '100px';
 					parent.appendChild(node);
 				}
 				node.setAttribute('src', saveCanvas.toDataURL());
+
+				return node.outerHTML;
 			}, [], true);
 		};
 
@@ -296,7 +298,7 @@ window.cleverCover = (function() {
 					};
 					params.link = {
 						left : 31,
-						top : 202
+						top : 205
 					};
 					break;
 			}
@@ -317,10 +319,11 @@ window.cleverCover = (function() {
 					$('#content').addClass(splited ? 'splited' : '');
 					$('#content_inner').addClass(type);
 					$('#save').click(function() {
-						canvas['cover'].save();
+						var content = canvas['cover'].save('popup_content').join('');
 						if(splited) {
-							canvas['avatar'].save();
+							content += canvas['avatar'].save('popup_content').join('');
 						}
+						popup.content('<p>Here\'s your avatar and your cover, just save them with right click and put them directly to your favorite social network.</p>' + content, true, 'cover_save');
 					});
 					$('input[name="cover_slider_choice"]').change(function() {
 						slider_choice = $(this).val();
@@ -344,7 +347,7 @@ window.cleverCover = (function() {
 			})();
 
 			var globSuccess;
-			//url = 'img.php?src='+encodeURIComponent(url);
+			url_cover = 'img.php?src='+encodeURIComponent(url_cover);
 			canvas['cover'].setImage(url_cover, function(success) {
 				if(success) {
 					jQuery('#canvas_cover').drag(function(data) {
@@ -354,6 +357,7 @@ window.cleverCover = (function() {
 				manageSuccess(success);
 			});
 			if(splited) {
+				url_avatar = 'img.php?src='+encodeURIComponent(url_avatar);
 				canvas['avatar'].setImage(url_avatar, function(success) {
 					if(success) {
 						jQuery('#canvas_picture').drag(function(data) {
@@ -374,6 +378,9 @@ window.cleverCover = (function() {
 			jQuery('#cover_flip input').change(function() {
 				canvas[slider_choice].flip();
 			});
+		},
+		help: function() {
+			jQuery('#overlay').show();
 		}
 	};
 })();
@@ -397,7 +404,7 @@ function Scroller() {
 			id : id + '_scroller',
 			className : 'scroller_drag'
 		});
-		$(id).appendChild(scroller);
+		$(id).appendChild(scroller).style.left = maxWidth - SCROLLER_WIDTH + 'px';
 
 		jQuery(scroller).drag(function(data) {
 			var old = parseInt(scroller.style.left, 10) || 0;
@@ -424,3 +431,8 @@ Scroller.bind = (function() {
 		binded[id].init.apply(binded[id], arguments);
 	};
 })();
+
+if(!jQuery.support.canvas) {
+	alert("I'm sorry but your browser seems not to be able to support CleverCover. Please use Chrome or Firefox instead. Thanks.");
+	throw "exit";
+}

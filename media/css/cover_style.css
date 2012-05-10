@@ -28,7 +28,7 @@ body {
 	background-color: #FFF;
 	border: 4px solid white;
 	position: absolute;
-	top: 198px;
+	top: 201px;
 	left: 27px;
 }
 #content_inner.facebook {
@@ -94,4 +94,71 @@ body {
 }
 #content.splited #cover_slider {
 	top: -19px;
+}
+
+
+#overlay {
+	background-color: #000000;
+	position: absolute;
+	min-width: 100%;
+	min-height: 100%;
+	top: 0;
+	left: 0;
+	z-index: 20;
+	display: none;
+}
+#popup {
+	position: absolute;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+	margin: auto;
+	background-color: #E7EBF2;
+	z-index: 30;
+	border: 4px solid #C4CDE0;
+	border-radius: 2px;
+	display: none;
+	overflow: hidden;
+	font-family: 'Yanone Kaffeesatz', arial, serif;
+	font-size: 15px;
+	padding: 10px;
+}
+#popup h1 {
+	text-align: center;
+}
+
+#popup_header {
+	display: none;
+}
+
+#popup.closable #popup_header {
+	position: absolute;
+	display: block;
+	margin-bottom: 5px;
+	background-color: #3B5998;
+	border-bottom: 1px solid #133783;
+	width: 100%;
+	top: 0;
+	left: 0;
+	text-align: right;
+	color: #FFF !important;
+}
+
+#popup_content {
+	position: relative;
+	min-height: 200px;
+	min-width: 500px;
+	width: 100%;
+	height: 100%;
+}
+
+#popup_content.cover_save {
+	text-align: center;
+}
+#popup_content.cover_save p {
+	text-align: left;
+}
+#popup_content.cover_save img:last-child {
+	margin-left: 10px;
 }

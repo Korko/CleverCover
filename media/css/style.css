@@ -1,0 +1,49 @@
+.button {
+	font-family: 'Yanone Kaffeesatz', arial, serif;
+	font-size: 30px;
+	color: #000;
+	text-decoration: none;
+	display: inline-block;
+	width: 478px;
+	height: 36px;
+	padding: 10px;
+	border: 2px solid #DDD;
+	text-align: center;
+	box-shadow: 1px 1px 0 #ddd;
+	-moz-border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-o-border-radius: 5px;
+	border-radius: 5px;
+	background: #FFF;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#FFF), to(#EEE));
+	background: -moz-linear-gradient(0% 90% 90deg, #EEE, #FFF);
+	-webkit-transition: all .4s ease-in-out;
+	-moz-transition: all .4s ease-in-out;
+	-o-transition: all .4s ease-in-out;
+	transition: all .4s ease-in-out;
+	cursor: pointer;
+}
+.button img {
+	vertical-align: middle;
+	height: 35px;
+}
+.button.disabled {
+	cursor: default;
+	color: #000 !important;
+	border-color: #AAA !important;
+	background: #CCC !important;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#CCC), to(#EEE)) !important;
+	background: -moz-linear-gradient(0% 90% 90deg, #EEE, #CCC) !important;
+}
+.button:hover {
+	color: #fff;
+	border-color: #3278BE;
+	background: #4195DD;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#4195DD), to(#003C82));
+	background: -moz-linear-gradient(0% 90% 90deg, #003C82, #4195DD);
+}
+.button:active {
+	background: #4195DD;
+	background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#003C82), to(#4195DD));
+	background: -moz-linear-gradient(0% 90% 90deg, #4195DD, #003C82);
+}

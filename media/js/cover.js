@@ -43,7 +43,6 @@ var ResizableCanvas = (function() {
 		this._ratio = 0;
 		this._minRatio = 0;
 		this._opacity = 1;
-		this._flipFactor = 1;
 
 		this._events = {};
 
@@ -59,16 +58,9 @@ var ResizableCanvas = (function() {
 				var context = ctx(this._id);
 				context.clearRect(0, 0, this._fullWidth, this._fullHeight);
 				context.save();
-				context.globalAlpha = this._opacity;
 				context.scale(this._ratio, this._ratio);
-
-				if(this._flipFactor === -1) {
-					context.translate(this._fullWidth/this._ratio, 0);
-					context.scale(-1, 1);
-				}
-				context.translate(this._flipFactor*(-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
-				context.drawImage(this._img, 0, 0);
-
+				context.globalAlpha = this._opacity;
+				context.drawImage(this._img, (-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
 				context.restore();
 			};
 
@@ -80,10 +72,13 @@ var ResizableCanvas = (function() {
 		};
 
 		this._prepare = function() {
-			$(this._id).setAttribute('width', this._width);
-			$(this._id).setAttribute('height', this._height);
-			$(this._id).style.width = this._width + 'px';
-			$(this._id).style.height = this._weight + 'px';
+			jQuery('#' + this._id).attr({
+				width : this._width,
+				height : this._height
+			}).css({
+				width : this._width + 'px',
+				height : this._weight + 'px'
+			});
 		};
 		jQuery(this._prepare.bind(this));
 
@@ -162,6 +157,7 @@ var ResizableCanvas = (function() {
 					});
 
 					this.changeRatio(this._ratio);
+					this.draw();
 				}(callback || noop)(success);
 			}.bind(this), true);
 		};
@@ -175,7 +171,7 @@ var ResizableCanvas = (function() {
 		};
 
 		this._fixPosition = function() {
-			this._x = mm(0, this._x, this._flipFactor * (this._img.naturalWidth - this._fullWidth / this._ratio) * this._ratio);
+			this._x = mm(0, this._x, (this._img.naturalWidth - this._fullWidth / this._ratio) * this._ratio);
 			this._y = mm(0, this._y, (this._img.naturalHeight - this._fullHeight / this._ratio) * this._ratio);
 		};
 
@@ -237,13 +233,6 @@ var ResizableCanvas = (function() {
 			//this._opacity = 1;
 			this.draw();
 		};
-
-		this.flip = function() {
-			this._propagate(function() {
-				this._flipFactor = this._flipFactor === -1 ? 1 : -1;
-				this.draw();
-			}, [], true);
-		};
 	};
 })();
 
@@ -255,51 +244,51 @@ var ResizableCanvas = (function() {
  */
 window.cleverCover = (function() {
 
-	var params = {
+	var type = 'facebook', params = {
 		cover : {},
 		avatar : {},
 		link : {}
-	};
+	}, cover, avatar;
+
+	switch(type) {
+		case 'google':
+			params.cover = {
+				width : 900,
+				height : 180
+			};
+			params.avatar = {
+				width : 250,
+				height : 250
+			};
+			params.link = {
+				left : 626,
+				top : -35
+			};
+			break;
+
+		case 'facebook':
+			params.cover = {
+				width : 850,
+				height : 313
+			};
+			params.avatar = {
+				width : 160,
+				height : 160,
+				extractWidth : 180,
+				extractHeight : 180
+			};
+			params.link = {
+				left : 31,
+				top : 202
+			};
+			break;
+	}
 
 	return {
 		init : function(type, url_cover, url_avatar, callback) {
 			var splited = !!url_avatar,
 				slider_choice = 'cover',
 				canvas = {};
-
-			switch(type) {
-				case 'google':
-					params.cover = {
-						width : 940,
-						height : 180
-					};
-					params.avatar = {
-						width : 250,
-						height : 250
-					};
-					params.link = {
-						left : 627,
-						top : -39
-					};
-					break;
-
-				case 'facebook':
-					params.cover = {
-						width : 850,
-						height : 313
-					};
-					params.avatar = {
-						width : 160,
-						height : 160,
-						extractWidth : 180,
-						extractHeight : 180
-					};
-					params.link = {
-						left : 31,
-						top : 202
-					};
-					break;
-			}
 
 			canvas['cover'] = new ResizableCanvas(jQuery.extend({
 				id : 'canvas_cover'
@@ -370,9 +359,6 @@ window.cleverCover = (function() {
 
 			Scroller.bind('cover_slider', 100, 1, function(ratio) {
 				canvas[slider_choice].changeRatio(ratio);
-			});
-			jQuery('#cover_flip input').change(function() {
-				canvas[slider_choice].flip();
 			});
 		}
 	};

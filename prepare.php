@@ -11,11 +11,12 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" href="style.css" />
-		<link rel="stylesheet" href="prepare_style.css" />
-		<script src="jquery-1.7.1.min.js"></script>
-		<script src="toolbox.js"></script>
-		<script src="prepare_script.js"></script>
+		<link rel="stylesheet" href="media/css/style.css" />
+		<link rel="stylesheet" href="media/css/prepare_style.css" />
+		<script src="media/js/jquery-1.7.1.min.js"></script>
+		<script src="media/js/jquery.support.js"></script>
+		<script src="media/js/toolbox.js"></script>
+		<script src="media/js/prepare_script.js"></script>
 		<title>CleverCover - Prepare</title>
 	</head>
 	<body>
@@ -24,8 +25,8 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			<div id="step_site" class="step active">
 				<p class="description">CleverCover helps you to generate easily and fastly a funny and original cover. In order to start, choose which platform you want a cover for.</p>
 				<div class="content">
-					<a href="#" onclick="choose('site', 'google'); return false;"><img src="Google.png" alt="Google" title="Google" /></a>
-					<a href="#" onclick="choose('site', 'facebook'); return false;"><img src="Facebook.png" alt="Facebook" title="Facebook" /></a>
+					<a href="#" onclick="choose('site', 'google'); return false;"><img src="media/image/Google.png" alt="Google" title="Google" /></a>
+					<a href="#" onclick="choose('site', 'facebook'); return false;"><img src="media/image/Facebook.png" alt="Facebook" title="Facebook" /></a>
 				</div>
 			</div>
 		</div>
@@ -55,14 +56,14 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 							<span>
 								<label for="picture_url">
 									<a class="button" onclick="choose('linked_image_origin', 'url'); return false;">
-										<img src="Planet.png" /> Online picture
+										<img src="media/image/Planet.png" /> Online picture
 									</a>
 								</label>
 							</span>
 							<span>
 								<label class="button">
-									<img src="Folder.png" /> Local picture
-									<input type="file" class="picture_file" name="media" onchange="choose('linked_image_origin', 'upload'); return false;" />
+									<img src="media/image/Folder.png" /> Local picture
+									<input type="file" class="picture_file" name="media" onchange="choose('linked_image_origin', 'upload'); return false;" accept="image/*"/>
 								</label>
 							</span>
 						</div>
@@ -75,7 +76,6 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 					</form>
 				</div>
 			</script>
-
 		</div>
 	</body>
 </html>

@@ -101,7 +101,7 @@ function ctx(id) {
 	return $(id).getContext('2d');
 }
 
-window.URL_PATTERN = '^([^:/?#]+:)?(//)?[^/?#]+[^?#]*[^#]*(#.*)?';
+window.URL_PATTERN = '^([^:/?#]+:)//[^/?#]+[^?#]*[^#]*(#.*)?';
 
 Array.prototype.max = function() {
 	var max = this[0];
