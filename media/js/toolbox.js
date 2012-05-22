@@ -145,12 +145,15 @@ function hide(element) {
 }
 
 // Asynchronously load JS
-function asyncjs(url, id) {
+function asyncjs(url, id, cb) {
+	if(id && $(id)) return;
+
 	var s=c('script');
 	s.type='text/javascript';
 	s.async=true;
 	s.src=url;
 	s.id=id;
+	s.onload=cb;
 
 	var s2=document.getElementsByTagName('script')[0];
 	s2.parentNode.insertBefore(s,s2);

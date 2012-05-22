@@ -196,7 +196,7 @@ var ResizableCanvas = (function() {
 			}, [], true);
 		};
 
-		this.save = function(toId) {
+		this.save = function(toId, raw) {
 			return this._propagate(function() {
 				var saveCanvas = $(this._id);
 
@@ -225,19 +225,8 @@ var ResizableCanvas = (function() {
 					parent.appendChild(node);
 				}
 				node.setAttribute('src', saveCanvas.toDataURL());
-
-				return node.outerHTML;
+				return raw ? node.src : node.outerHTML;
 			}, [], true);
-		};
-
-		this.expand = function() {
-			//this._opacity = 0.5;
-			this.draw();
-		};
-
-		this.reduce = function() {
-			//this._opacity = 1;
-			this.draw();
 		};
 
 		this.flip = function() {
@@ -260,7 +249,8 @@ window.cleverCover = (function() {
 	var params = {
 		cover : {},
 		avatar : {},
-		link : {}
+		link : {},
+		type : null
 	};
 
 	return {
@@ -302,6 +292,7 @@ window.cleverCover = (function() {
 					};
 					break;
 			}
+			params.type = type;
 
 			canvas['cover'] = new ResizableCanvas(jQuery.extend({
 				id : 'canvas_cover'
@@ -319,9 +310,9 @@ window.cleverCover = (function() {
 					$('#content').addClass(splited ? 'splited' : '');
 					$('#content_inner').addClass(type);
 					$('#save').click(function() {
-						var content = canvas['cover'].save('popup_content').join('');
+						var content = canvas['cover'].save().join('');
 						if(splited) {
-							content += canvas['avatar'].save('popup_content').join('');
+							content += canvas['avatar'].save().join('');
 						}
 						popup.content('<p>Here\'s your avatar and your cover, just save them with right click and put them directly to your favorite social network.</p>' + content, true, 'cover_save');
 					});
