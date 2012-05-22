@@ -1,5 +1,7 @@
 // Popup management
 var popup = (function($) {
+	var force_close = false;
+
 	return {
 		close : function() {
 			$('#popup_content').removeClass();
@@ -14,6 +16,8 @@ var popup = (function($) {
 				}, function() {
 					$(this).hide().css('opacity', 1);
 				});
+			} else {
+				force_close = true;
 			}
 		},
 		load : function(id, keep) {
@@ -26,6 +30,8 @@ var popup = (function($) {
 		},
 		content : function(html, closable, className) {
 			var popup = $('#popup'), content = $('#popup_content');
+
+			force_close = false;
 
 			if(closable === false) {
 				popup.removeClass('closable');
@@ -67,9 +73,11 @@ var popup = (function($) {
 						width : '100%'
 					}).show().animate({
 						opacity : 1
-					});
-				});
-			});
+					}, function() {
+						force_close && this.close();
+					}.bind(this));
+				}.bind(this));
+			}.bind(this));
 		}
 	};
 })(jQuery);

@@ -97,12 +97,15 @@ function fuajax(f, cb) {
 	};
 }
 
+// Get canvas context
+// @params (canvas id)
 function ctx(id) {
 	return $(id).getContext('2d');
 }
 
 window.URL_PATTERN = '^([^:/?#]+:)//[^/?#]+[^?#]*[^#]*(#.*)?';
 
+// Get max value in an array
 Array.prototype.max = function() {
 	var max = this[0];
 	var len = this.length;
@@ -114,6 +117,7 @@ Array.prototype.max = function() {
 	return max;
 };
 
+// Get min value in an array
 Array.prototype.min = function() {
 	var min = this[0];
 	var len = this.length;
@@ -125,6 +129,8 @@ Array.prototype.min = function() {
 	return min;
 };
 
+// Hide an element in a hidden div
+// @param (element)
 function hide(element) {
 	if(!$('hidden')) {
 		var div = c('div', {
@@ -136,4 +142,16 @@ function hide(element) {
 		document.body.appendChild(div);
 	}
 	$('hidden').appendChild(element);
+}
+
+// Asynchronously load JS
+function asyncjs(url, id) {
+	var s=c('script');
+	s.type='text/javascript';
+	s.async=true;
+	s.src=url;
+	s.id=id;
+
+	var s2=document.getElementsByTagName('script')[0];
+	s2.parentNode.insertBefore(s,s2);
 }

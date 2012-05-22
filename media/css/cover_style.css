@@ -15,6 +15,36 @@ body {
 	border-bottom: 1px solid #133783;
 	width: 100%;
 }
+
+#bluebar .social-network {
+	position: relative;
+	float: left;
+	top: 50%;
+	border: none;
+	overflow: hidden;
+}
+
+#bluebar .social-network.facebook {
+	height: 22px;
+	margin-top: -11px;
+	width: 100px;
+}
+#bluebar .social-network.google {
+	height: 24px;
+	margin-top: -12px;
+	width: 50px;
+}
+#bluebar .social-network.twitter {
+	height: 22px;
+	margin-top: -11px;
+	width: 90px;
+}
+#bluebar .social-network.stumble {
+	height: 22px;
+	margin-top: -11px;
+	width: 65px;
+}
+
 #content {
 	width: 853px;
 	margin: 0 auto;
