@@ -72,6 +72,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			</div>
 		</div>
 		<div id="comments">
+			<p>Why not leave a message for other users or the developer?</p>
 			<div class="fb-comments" data-href="<?= $siteUrl ?>" data-num-posts="2" data-width="470"></div>
 		</div>
 		<div id="popup">
