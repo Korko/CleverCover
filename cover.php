@@ -44,7 +44,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			</div>
 			<div class="social-network google">
 				<div class="g-plusone" data-annotation="none" data-href="<?= $siteUrl ?>"></div>
-				<script type="text/javascript">asyncjs('https://apis.google.com/js/plusone.js', 'twitter-wjs');</script>
+				<script type="text/javascript">asyncjs('https://apis.google.com/js/plusone.js');</script>
 			</div>
 			<div class="social-network twitter">
 				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?= $siteUrl ?>" data-text="CleverCover" data-via="korkof" data-related="korkof">Tweet</a>
