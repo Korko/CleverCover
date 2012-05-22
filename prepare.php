@@ -25,8 +25,8 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			<div id="step_site" class="step active">
 				<p class="description">CleverCover helps you to generate easily and fastly a funny and original cover. In order to start, choose which platform you want a cover for.</p>
 				<div class="content">
-					<a href="#" onclick="choose('site', 'google'); return false;"><img src="media/image/Google.png" alt="Google" title="Google" /></a>
-					<a href="#" onclick="choose('site', 'facebook'); return false;"><img src="media/image/Facebook.png" alt="Facebook" title="Facebook" /></a>
+					<a href="#" onclick="choose('site', 'google', this); return false;"><img src="media/image/Google.png" alt="Google" title="Google" /></a>
+					<a href="#" onclick="choose('site', 'facebook', this); return false;"><img src="media/image/Facebook.png" alt="Facebook" title="Facebook" /></a>
 				</div>
 			</div>
 		</div>
@@ -37,13 +37,28 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				<p class="description">What kind of cover do you want to do?</p>
 				<div class="content">
 					<span>
-						<a class="button" href="#" onclick="choose('splited', false); return false;">
+						<a class="button" href="#" onclick="choose('splited', 0, this); return false;">
 							Single picture
 						</a>
 					</span>
 					<span>
-						<a class="button disabled" href="#" onclick="choose('splited', true); return false;">
+						<a class="button disabled" href="#" onclick="choose('splited', 1, this); return false;">
 							Two pictures
+						</a>
+					</span>
+				</div>
+			</script>
+			<script id="template_special" type="template/html">
+				<p class="description">What kind of profile do you have?</p>
+				<div class="content">
+					<span>
+						<a class="button" href="#" onclick="choose('special', 0, this); return false;">
+							Classical (User)
+						</a>
+					</span>
+					<span>
+						<a class="button" href="#" onclick="choose('special', 1, this); return false;">
+							Page
 						</a>
 					</span>
 				</div>

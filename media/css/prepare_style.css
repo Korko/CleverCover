@@ -41,6 +41,9 @@ html, body {
 .step.disabled {
 	z-index: 0;
 }
+.step.disabled .button.highlight {
+	background: #4195DD;
+}
 .step:first-child {
 	border: 0;
 }

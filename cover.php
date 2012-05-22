@@ -9,7 +9,7 @@ $site = filter_enum($_GET['site'], array('facebook', 'google'), 'facebook');
 $cover = filter_var($_GET['cover'], FILTER_VALIDATE_URL) or die('Invalid cover url');
 $avatar = isset($_GET['avatar']) ? filter_var($_GET['avatar'], FILTER_VALIDATE_URL) : false;
 
-$special = isset($_GET['special']) ? 1 : 0;
+$special = isset($_GET['special']) && $_GET['special'] ? 1 : 0;
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
 

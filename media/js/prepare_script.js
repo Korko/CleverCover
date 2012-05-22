@@ -45,8 +45,10 @@ jQuery.fn.extend({
 	};
 
 	var steps = {
-		site: 'linked_image',
-		//site: 'splited',
+		site: function(params) {
+			return params['site'] === 'facebook' ? 'special' : 'linked_image';
+		},
+		special: 'linked_image', 
 		//splited: function(params) {
 		//	return params['splited'] ? 'splited_cover' : 'linked_image';
 		//},
@@ -68,11 +70,14 @@ jQuery.fn.extend({
 		}
 	};
 
-	window.choose = function(field, value) {
+	window.choose = function(field, value, button) {
 		params[field] = value;
 		if(steps[field]) {
 			step($.isFunction(steps[field]) ? steps[field](params) : steps[field]);
 		}
+
+		$(button).parents('.step').find('.highlight').removeClass('highlight');
+		$(button).addClass('highlight');
 	};
 
 	window.callback = function(field, event) {
