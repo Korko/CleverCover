@@ -7,7 +7,7 @@ function filter_enum($var, $enum, $default = null) {
 
 $site = filter_enum($_GET['site'], array('facebook', 'google'), 'facebook');
 $cover = filter_var($_GET['cover'], FILTER_VALIDATE_URL) or die('Invalid cover url');
-$splited = (isset($_GET['splited']) && $_GET['splited']);
+$avatar = isset($_GET['avatar']) ? filter_var($_GET['avatar'], FILTER_VALIDATE_URL) : false;
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
 
@@ -80,7 +80,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				popup.content('<p>Preparing your cover... It may take a while.', false);
-				cleverCover.init('<?= $site ?>', '<?= $cover ?>', null, function(success) {
+				cleverCover.init('<?= $site ?>', '<?= $cover ?>', <?php echo !$avatar ? "null" : "'".$avatar."'"; ?>, function(success) {
 					popup.close();
 				});
 			});
