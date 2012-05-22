@@ -71,6 +71,9 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				<div id="cover_flip"><label>Reverse? <input type="checkbox" name="flip" /></div>
 			</div>
 		</div>
+		<div id="comments">
+			<div class="fb-comments" data-href="<?= $siteUrl ?>" data-num-posts="2" data-width="470"></div>
+		</div>
 		<div id="popup">
 			<div id="popup_header"><a href="#" onclick="popup.close(); return false;">X</a></div>
 			<h1>CleverCover</h1><div id="popup_content"></div>
