@@ -50,25 +50,29 @@ var ResizableCanvas = (function() {
 		 *	  Methods	  *
 		 ********************/
 
+		this._draw = function(context, subratio) {
+			context.clearRect(0, 0, this._fullWidth, this.fullHeight);
+			context.save();
+			context.globalAlpha = this._opacity;
+
+			subratio = subratio || 1;
+			context.scale(this._ratio / subratio, this._ratio / subratio);
+
+			if(this._flipFactor === -1) {
+				context.translate(this._fullWidth/this._ratio, 0);
+				context.scale(-1, 1);
+			}
+			context.translate(this._flipFactor*(-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
+			context.drawImage(this._img, 0, 0);
+
+			context.restore();
+		};
+
 		// draw the canvas
 		this.draw = function(propagate) {
 			var _draw = function() {
 				this._fixPosition();
-
-				var context = ctx(this._id);
-				context.clearRect(0, 0, this._fullWidth, this._fullHeight);
-				context.save();
-				context.globalAlpha = this._opacity;
-				context.scale(this._ratio, this._ratio);
-
-				if(this._flipFactor === -1) {
-					context.translate(this._fullWidth/this._ratio, 0);
-					context.scale(-1, 1);
-				}
-				context.translate(this._flipFactor*(-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
-				context.drawImage(this._img, 0, 0);
-
-				context.restore();
+				this._draw(ctx(this._id));
 			};
 
 			if (propagate) {
@@ -209,9 +213,7 @@ var ResizableCanvas = (function() {
 					});
 
 					var context = saveCanvas.getContext('2d');
-					var ratio = this._ratio / (this._width / this._extractWidth);
-					context.scale(ratio, ratio);
-					context.drawImage(this._img, (-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
+					this._draw(context, this._width / this._extractWidth);
 				}
 
 				// L'image de la couverture que nous pourrons sauvegarder est en fait une chaîne sous forme base64
@@ -225,7 +227,7 @@ var ResizableCanvas = (function() {
 					parent.appendChild(node);
 				}
 				node.setAttribute('src', saveCanvas.toDataURL());
-				return raw ? node.src : node.outerHTML;
+				return raw ? node.src : exportNode(node);
 			}, [], true);
 		};
 
@@ -254,7 +256,7 @@ window.cleverCover = (function() {
 	};
 
 	return {
-		init : function(type, url_cover, url_avatar, callback) {
+		init : function(type, url_cover, url_avatar, callback, special) {
 			var splited = !!url_avatar,
 				slider_choice = 'cover',
 				canvas = {};
@@ -286,11 +288,13 @@ window.cleverCover = (function() {
 						extractWidth : 180,
 						extractHeight : 180
 					};
-					params.link = {
-						left : 31,
-						top : 205
+					params.link = !special ? {
+						left : 27,
+						top : 198
+					} : {
+						left : 27,
+						top : 215
 					};
-					break;
 			}
 			params.type = type;
 
@@ -308,7 +312,7 @@ window.cleverCover = (function() {
 			jQuery((function($) {
 				return function() {
 					$('#content').addClass(splited ? 'splited' : '');
-					$('#content_inner').addClass(type);
+					$('#content_inner').addClass(type+' '+(special ? 'special' : ''));
 					$('#save').click(function() {
 						var content = canvas['cover'].save().join('');
 						if(splited) {

@@ -158,3 +158,14 @@ function asyncjs(url, id, cb) {
 	var s2=document.getElementsByTagName('script')[0];
 	s2.parentNode.insertBefore(s,s2);
 }
+
+function exportNode(node) {
+	return node.outerHTML || (
+		function(n){
+			var div = document.createElement('div'), h;
+			div.appendChild( n.cloneNode(true) );
+			h = div.innerHTML;
+			div = null;
+			return h;
+		})(node);
+}
