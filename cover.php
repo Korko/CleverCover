@@ -12,6 +12,7 @@ $avatar = isset($_GET['avatar']) ? filter_var($_GET['avatar'], FILTER_VALIDATE_U
 $special = isset($_GET['special']) && $_GET['special'] ? 1 : 0;
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
+$facebookAppId = '331564836913559';
 
 ?>
 <!DOCTYPE html>
@@ -42,7 +43,12 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			<div class="social-network facebook">
 				<div id="fb-root"></div>
 				<div class="fb-like" data-href="<?= $siteUrl ?>" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
-				<script type="text/javascript">asyncjs('http://connect.facebook.net/fr_FR/all.js#xfbml=1', 'facebook-jssdk');</script>
+				<script type="text/javascript">asyncjs('http://connect.facebook.net/fr_FR/all.js', 'facebook-jssdk');</script>
+				<script type="text/javascript">
+					window.fbAsyncInit = function() {
+						FB.init({appId:'<?= $facebookAppId ?>',status:true,cookie:true,xfbml:true,oauth:true});
+					};
+				</script>
 			</div>
 			<div class="social-network google">
 				<div class="g-plusone" data-annotation="none" data-href="<?= $siteUrl ?>"></div>
