@@ -92,3 +92,12 @@ label input[type="file"] {
 	right: 10px;
 	margin-top: 10px;
 }
+
+#disclaimer {
+	font-size: 13px;
+}
+
+#disclaimer ul {
+	list-style: none;
+	padding: 0;
+}

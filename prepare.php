@@ -82,6 +82,15 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 								</label>
 							</span>
 						</div>
+						<div id="disclaimer">
+							<p>
+								Caution, images have to be at least :
+								<ul>
+									<li>For Google+ : 940px wide and 250px tall</li>
+									<li>For Facebook : 850px wide and 358px tall (375px tall for pages)</li>
+								</ul>
+							</p>
+						</div>
 						<div class="upload_fields">
 							<input type="text" class="picture_url" name="picture_url" placeholder="URL of the picture" required="required" />
 							<input type="hidden" name="key" value="245BDFGU01bf81c0d51e350622385c569d4acc75" />
