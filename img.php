@@ -17,34 +17,45 @@ function loadImage ($file) {
     return $im;
 }
 
-if (!isset($_GET['src'])) {
-    die('USAGE: img.php?src=&lt;imageURL&gt;');
-}
+if (isset($_POST['src'])) {
+	$src = $_POST['src'];
 
-$src = $_GET['src'];
+	header('Content-Type: image/png');
+	header("Content-Disposition: attachment; filename=".uniqid(microtime(true)).".png");
+	$uri =  substr($src, strpos($src,",") + 1);
+	$im2 = imagecreatefromstring(base64_decode($uri));
+	imagepng($im2);
+	imagedestroy($im2);
+} else if (isset($_GET['url'])) {
+	$url = $_GET['url'];
+	
+	try {
+	    $image = loadImage($url);
+	} catch(Exception $e) {
+	    die('Unable to load this image');
+	}
+	
+	$w = imagesx($image);
+	$h = imagesy($image);
+	
+	$im2 = ImageCreateTrueColor($w, $h);
+	imagecopyResampled ($im2, $image, 0, 0, 0, 0, $w, $h, $w, $h);
+	
+	$time = @filemtime($url);
+	if ($time === null) {
+		$time = time();
+	}
 
-try {
-    $image = loadImage($src);
-} catch(Exception $e) {
-    die('Unable to load this image');
-}
-
-$w = imagesx($image);
-$h = imagesy($image);
-
-$im2 = ImageCreateTrueColor($w, $h);
-imagecopyResampled ($im2, $image, 0, 0, 0, 0, $w, $h, $w, $h);
-
-$time = @filemtime($src);
-if ($time === null) {
-	$time = time();
+	header('Content-Type: image/png');
+	header("Content-Disposition: inline; filename=".basename($url).".png");
+	imagepng($im2);
+	imagedestroy($im2);
+	imagedestroy($image);
+} else {
+	die('USAGE: img.php?url=&lt;imageURL&gt; or img.php + by POST src=&lt;base64&gt;');
 }
 
 header('Content-type: image/png');
-header("Content-Disposition: inline; filename=".basename($src).".png");
 header('Last-Modified: ' . gmdate('D, d M Y H:i:s', $time) . ' GMT');
 header("Cache-Control: public");
 header("Pragma: public");
-imagepng($im2);
-imagedestroy($im2);
-imagedestroy($image);

@@ -200,7 +200,7 @@ var ResizableCanvas = (function() {
 			}, [], true);
 		};
 
-		this.save = function(toId, raw) {
+		this.save = function() {
 			return this._propagate(function() {
 				var saveCanvas = $(this._id);
 
@@ -219,15 +219,7 @@ var ResizableCanvas = (function() {
 				// L'image de la couverture que nous pourrons sauvegarder est en fait une chaîne sous forme base64
 				// e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAgA...
 				// Fonctionnalité permise par un canvas si l'origine de l'image est sûre (même domaine) d'où le fichier php "img.php" plus bas
-				var node = toId ? $(toId) : c('div');
-				if(node.nodeName !== 'IMG') {
-					var parent = node;
-					node = c('img');
-					node.style.height = '100px';
-					parent.appendChild(node);
-				}
-				node.setAttribute('src', saveCanvas.toDataURL());
-				return raw ? node.src : exportNode(node);
+				return saveCanvas.toDataURL();
 			}, [], true);
 		};
 
@@ -314,11 +306,25 @@ window.cleverCover = (function() {
 					$('#content').addClass(splited ? 'splited' : '');
 					$('#content_inner').addClass(type+' '+(special ? 'special' : ''));
 					$('#save').click(function() {
-						var content = canvas['cover'].save().join('');
+						var data = canvas['cover'].save();
 						if(splited) {
-							content += canvas['avatar'].save().join('');
+							data.push(canvas['avatar'].save());
 						}
-						popup.content('<p>Here\'s your avatar and your cover, just save them with right click and put them directly to your favorite social network.</p>' + content, true, 'cover_save');
+
+						var div = $('<div>');
+						$.each(data, function(id, data) {
+							var node = c('img');
+							node.style.height = '100px';
+							node.setAttribute('src', data);
+							$(node).bind('click', function() {
+								jQuery.download('img.php', 'src='+data);
+							});
+							div.append(node);
+						});
+
+						var content = $('<p>Here\'s your avatar and your cover, just save them by clicking on each one and put them directly to your favorite social network.</p>');
+						content = content.add(div);
+						popup.content(content, true, 'cover_save');
 					});
 					$('input[name="cover_slider_choice"]').change(function() {
 						slider_choice = $(this).val();
@@ -342,7 +348,7 @@ window.cleverCover = (function() {
 			})();
 
 			var globSuccess;
-			url_cover = 'img.php?src='+encodeURIComponent(url_cover);
+			url_cover = 'img.php?url='+encodeURIComponent(url_cover);
 			canvas['cover'].setImage(url_cover, function(success) {
 				if(success) {
 					jQuery('#canvas_cover').drag(function(data) {

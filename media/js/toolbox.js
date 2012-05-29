@@ -141,7 +141,8 @@ function hide(element) {
 		});
 		document.body.appendChild(div);
 	}
-	$('hidden').appendChild(element);
+	$('hidden').appendChild(element[0] || element);
+	return element;
 }
 
 // Asynchronously load JS
@@ -169,3 +170,18 @@ function exportNode(node) {
 			return h;
 		})(node);
 }
+
+jQuery.download = function(url, data, method) {
+	if (url && data) { 
+		data = (typeof data == 'string') ? data : jQuery.param(data);
+
+		var inputs = '';
+		jQuery.each(data.split('&'), function() { 
+			var pair = this.split('=');
+			inputs += '<input type="hidden" name="'+ pair[0] +'" value="'+ pair[1] +'" />'; 
+		});
+
+		var iframe = hide(jQuery('<iframe>').identify());
+		hide(jQuery('<form action="'+ url +'" target="'+ iframe.attr('id') +'" method="'+ (method||'post') +'">'+inputs+'</form>')).submit().remove();
+	}
+};
