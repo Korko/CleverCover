@@ -1,3 +1,17 @@
+<?php
+
+$css = array(
+	'style',
+	'prepare_style'
+);
+$js = array(
+	'jquery-1.7.1.min',
+	'jquery.support',
+	'toolbox',
+	'prepare_script'
+);
+
+?>
 <!DOCTYPE html>
 <!--
 This script can generate from a global picture two parts in order to be used as cover and profile picture in Facebook.
@@ -13,10 +27,18 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<link rel="stylesheet" href="media/css/style.css" />
 		<link rel="stylesheet" href="media/css/prepare_style.css" />
-		<script src="media/js/jquery-1.7.1.min.js"></script>
-		<script src="media/js/jquery.support.js"></script>
-		<script src="media/js/toolbox.js"></script>
-		<script src="media/js/prepare_script.js"></script>
+<?php
+		foreach($css as $style) {
+			$path = 'media/css/'.$style.'.css';
+			$stats = stat($path);
+			echo '<link rel="stylesheet" href="'.$path.'?mtime='.($stats['mtime']).'" />';
+		}
+		foreach($js as $script) {
+			$path = 'media/js/'.$script.'.js';
+			$stats = stat($path);
+			echo '<script type="text/javascript" src="'.$path.'?mtime='.($stats['mtime']).'"></script>';
+		}
+?>
 		<title>CleverCover - Prepare</title>
 	</head>
 	<body>
@@ -81,15 +103,6 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 									<input type="file" class="picture_file" name="media" onchange="choose('linked_image_origin', 'upload'); return false;" accept="image/*"/>
 								</label>
 							</span>
-						</div>
-						<div id="disclaimer">
-							<p>
-								Caution, images have to be at least :
-								<ul>
-									<li>For Google+ : 940px wide and 250px tall</li>
-									<li>For Facebook : 850px wide and 358px tall (375px tall for pages)</li>
-								</ul>
-							</p>
 						</div>
 						<div class="upload_fields">
 							<input type="text" class="picture_url" name="picture_url" placeholder="URL of the picture" required="required" />

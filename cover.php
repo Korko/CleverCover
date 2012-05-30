@@ -13,6 +13,20 @@ $special = isset($_GET['special']) && $_GET['special'] ? 1 : 0;
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
 
+$css = array(
+	'style',
+	'cover_style'
+);
+$js = array(
+	'jquery-1.7.1.min',
+	'jquery.support',
+	'jquery.drag',
+	'jquery.identify',
+	'toolbox',
+	'popup',
+	'cover_script'
+);
+
 ?>
 <!DOCTYPE html>
 <!--
@@ -27,15 +41,18 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 <html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-		<link rel="stylesheet" href="media/css/style.css" />
-		<link rel="stylesheet" href="media/css/cover_style.css" />
-		<script type="text/javascript" src="media/js/jquery-1.7.1.min.js"></script>
-		<script type="text/javascript" src="media/js/jquery.support.js"></script>
-		<script type="text/javascript" src="media/js/jquery.drag.js"></script>
-		<script type="text/javascript" src="media/js/jquery.identify.js"></script>
-		<script type="text/javascript" src="media/js/toolbox.js"></script>
-		<script type="text/javascript" src="media/js/popup.js"></script>
-		<script type="text/javascript" src="media/js/cover_script.js"></script>
+<?php
+		foreach($css as $style) {
+			$path = 'media/css/'.$style.'.css';
+			$stats = stat($path);
+			echo '<link rel="stylesheet" href="'.$path.'?mtime='.($stats['mtime']).'" />';
+		}
+		foreach($js as $script) {
+			$path = 'media/js/'.$script.'.js';
+			$stats = stat($path);
+			echo '<script type="text/javascript" src="'.$path.'?mtime='.($stats['mtime']).'"></script>';
+		}
+?>
 		<title>CleverCover</title>
 	</head>
 	<body>
