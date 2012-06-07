@@ -15,13 +15,15 @@ $siteUrl = 'http://www.korko.fr/clevercover/';
 
 $css = array(
 	'style',
-	'cover_style'
+	'cover_style',
+	'pageguide.min'
 );
 $js = array(
 	'jquery-1.7.1.min',
 	'jquery.support',
 	'jquery.drag',
 	'jquery.identify',
+	'pageguide.min',
 	'toolbox',
 	'popup',
 	'cover_script'
@@ -100,10 +102,37 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			<h1>CleverCover</h1><div id="popup_content"></div>
 		</div>
 		<div id="overlay"></div>
-
+		<ul id="tlyPageGuide" data-tourtitle="Help?">
+			<li class="tlypageguide_left" data-tourtarget="#content_inner">
+	  			<div>
+					Here is your picture, you can click and drag to move it.
+	  			</div>
+			</li>
+			<li class="tlypageguide_left" data-tourtarget="#cover_slider">
+				<div>
+					Feel free to resize your picture from the cover width to your picture's.
+				</div>
+			</li>
+			<li class="tlypageguide_bottom" data-tourtarget="#cover_flip">
+				<div>
+					If you want to, you can flip your picture horizontaly (left becomes right).
+				</div>
+			</li>
+			<li class="tlypageguide_bottom" data-tourtarget="#save">
+				<div>
+					Once your picture is ready, click here to save your pictures.
+				</div>
+			</li>
+			<li class="tlypageguide_top" data-tourtarget="#comments">
+				<div>
+					Do not hesitate to leave a comment if you like or not this tool.
+				</div>
+			</li>
+		</ul>
 		<script type="text/javascript">
 			jQuery(document).ready(function() {
 				popup.content('<p>Preparing your cover... It may take a while.', false);
+				tl.pg.init();
 				cleverCover.init('<?= $site ?>', '<?= $cover ?>', <?php echo !$avatar ? "null" : "'".$avatar."'"; ?>, function(success) {
 					popup.close();
 				}, <?= $special ?>);

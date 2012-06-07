@@ -11,6 +11,9 @@ function loadImage ($file) {
         case "image/png":
             $im = imagecreatefrompng($file);
             break;
+		case "image/gif":
+			$im = imagecreatefromgif($file);
+			break;
         default:
             throw new Exception('Img Type not managed');
     }
