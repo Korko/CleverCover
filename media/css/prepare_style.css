@@ -101,3 +101,13 @@ label input[type="file"] {
 	list-style: none;
 	padding: 0;
 }
+
+#examples {
+    z-index: 3;
+    position: relative;
+    text-align: center;
+}
+
+img.thumb {
+    width: 300px;
+}

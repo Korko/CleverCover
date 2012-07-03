@@ -42,7 +42,13 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 		<title>CleverCover - Prepare</title>
 	</head>
 	<body>
-		<div id="header"><h1>Clever Cover</h1></div>
+		<div id="header">
+			<h1>Clever Cover</h1>
+		</div>
+		<div id="examples">
+			<img src="media/image/example_google.png" title="Example of what CleverCover will help you realize" class="thumb" />
+			<img src="media/image/example_facebook.png" title="Example of what CleverCover will help you realize" class="thumb" />
+		</div>
 		<div id="timeline">
 			<div id="step_site" class="step active">
 				<p class="description">CleverCover helps you to generate easily and fastly a funny and original cover. In order to start, choose which platform you want a cover for.</p>
