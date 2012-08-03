@@ -43,7 +43,7 @@ function loadImg(u, cb) {
 	var i = new Image();
 	i.src = u;
 	hide(i);
-	i.onload = function(e) {
+	i.onload = i.onerror = function(e) {
 		cb(e);
 		i.parentNode.removeChild(i);
 	};

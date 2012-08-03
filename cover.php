@@ -1,15 +1,19 @@
 <?php
 
+include('statsd.php');
+
 // Sanitize params
 function filter_enum($var, $enum, $default = null) {
 	return in_array($var, $enum) ? $var : $default;
 }
 
-$site = filter_enum($_GET['site'], array('facebook', 'google'), 'facebook');
-$cover = filter_var($_GET['cover'], FILTER_VALIDATE_URL) or die('Invalid cover url');
-$avatar = isset($_GET['avatar']) ? filter_var($_GET['avatar'], FILTER_VALIDATE_URL) : false;
+$site = filter_enum($_REQUEST['site'], array('facebook', 'google'), 'facebook');
+$cover = filter_var($_REQUEST['cover'], FILTER_VALIDATE_URL) or die('Invalid cover url');
+$avatar = isset($_REQUEST['avatar']) ? filter_var($_REQUEST['avatar'], FILTER_VALIDATE_URL) : false;
 
-$special = isset($_GET['special']) && $_GET['special'] ? 1 : 0;
+$special = isset($_REQUEST['special']) && $_REQUEST['special'] ? 1 : 0;
+
+StatsD::increment('clevercover.cover.'.$site.'.'.$special);
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
 
@@ -133,9 +137,16 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			jQuery(document).ready(function() {
 				popup.content('<p>Preparing your cover... It may take a while.', false);
 				tl.pg.init();
-				cleverCover.init('<?= $site ?>', '<?= $cover ?>', <?php echo !$avatar ? "null" : "'".$avatar."'"; ?>, function(success) {
+				var site='<?= $site ?>',
+				    cover='<?= $cover ?>',
+				    avatar=<?php echo !$avatar ? "null" : "'".$avatar."'"; ?>,
+				    special=<?= $special ?>;
+				cleverCover.init(site, cover, avatar, function(success) {
 					popup.close();
-				}, <?= $special ?>);
+					if(!success) {
+						window.location.href = location.href.substr(0, location.href.lastIndexOf('/')+1)+'?site='+site+'&special='+special;
+					}
+				}, special);
 			});
 		</script>
 

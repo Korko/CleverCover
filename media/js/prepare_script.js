@@ -46,15 +46,15 @@ jQuery.fn.extend({
 
 	var steps = {
 		site: function(params) {
-			return params['site'] === 'facebook' ? 'special' : 'linked_image';
+			return params['site'] === 'facebook' ? 'special' : 'linked_image_origin';
 		},
-		special: 'linked_image', 
+		special: 'linked_image_origin', 
 		//splited: function(params) {
-		//	return params['splited'] ? 'splited_cover' : 'linked_image';
+		//	return params['splited'] ? 'splited_cover' : 'linked_image_origin';
 		//},
 		linked_image_origin: function(params) {
 			if(params['linked_image_origin'] === 'url') {
-				var input = $('#timeline .step.active .picture_url').attr('disabled', null).attr('pattern', URL_PATTERN).val('').change();
+				var input = $('#timeline .step.active .picture_url').prop('disabled', null).prop('pattern', URL_PATTERN).val('').change();
 				input.parent().show();
 				input.focus();
 			} else {
@@ -64,20 +64,25 @@ jQuery.fn.extend({
 				path = path.substr(path.lastIndexOf('\\') + 1);
 
 				// Fill the text field but disable it (it's only info not changeable)
-				$('#timeline .step.active .picture_url').attr('disabled', 'disabled').attr('pattern', null).val(path).change().parent().show();
+				$('#timeline .step.active .picture_url').prop('disabled', true).prop('pattern', null).val(path).change().parent().show();
 			}
 			$("html,body").scrollToBottom();
 		}
 	};
 
-	window.choose = function(field, value, button) {
+	window.choose = function(field, value) {
+		var $button = $('#step_'+field+' a[data-value="'+value+'"]');
+		if($button.length === 0) {
+			return;
+		}
+
 		params[field] = value;
 		if(steps[field]) {
 			step($.isFunction(steps[field]) ? steps[field](params) : steps[field]);
 		}
 
-		$(button).parents('.step').find('.highlight').removeClass('highlight');
-		$(button).addClass('highlight');
+		$button.parents('.step').find('.highlight').removeClass('highlight');
+		$button.addClass('highlight');
 	};
 
 	window.callback = function(field, event) {
@@ -93,23 +98,38 @@ jQuery.fn.extend({
 			}
 
 			if (!params['splited'] || (params['splited'] && params['avatar'])) {
-				var url = 'cover.php?';
-				$.each(params, function(key, value) {
-					url += encodeURIComponent(key)+'='+encodeURIComponent(value)+'&';
+				var form = c('form', {
+					attributes: {
+						method: "post",
+						action: "cover.php"
+					}
 				});
-				location.href = url;
+				$.each(params, function(key, value) {
+					form.appendChild(c('input', {
+						attributes: {
+							type: 'hidden',
+							name: key,
+							value: value
+						}
+					}));
+				});
+				form.submit();
 			}
 		};
 
-		// if we choose url, we do not have to generate one
+		// if we choose upload, send to an iframe and wait until it's loaded
 		if(params[field+'_origin'] === 'upload') {
 			fuajax(jQuery('#timeline .step.active form.upload_picture')[0], function(url) {
 				callback.apply(this, [url]);
 			}.bind(this));
 		}
-		// else upload to an iframe and wait until it's loaded
+		// else we do not have to generate one
 		else {
-			callback.apply(this, [$('#timeline .step.active input.picture_url').val()]);
+			$.ajax('img.php?url='+$('#timeline .step.active input.picture_url').val(), {
+				success: function(data) {
+					callback.apply(this, [window.location.protocol+'//'+window.location.host+data]);
+				}
+			});
 			return false;
 		}
 	};
@@ -119,7 +139,7 @@ jQuery.fn.extend({
 		if($.browser.mozilla) {
 			$('label').live('click', function(event) {
 				if(event.target === this) {
-					$('#'+ $(this).attr('for')).extend($('input', this)).filter('[type="file"]').first().click();
+					$('#'+ $(this).prop('for')).extend($('input', this)).filter('[type="file"]').first().click();
 				}
 			})
 		}

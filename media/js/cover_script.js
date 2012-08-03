@@ -151,9 +151,12 @@ var ResizableCanvas = (function() {
 
 		// change canvas picture
 		this.setImage = function(url, callback) {
-			this._img = loadImg(url, function() {
+			this._img = loadImg(url, function(e) {
 				var success = true;
-				if(this._img.naturalWidth < this._fullWidth || this._img.naturalHeight < this._fullHeight) {
+				if(e.type === 'error') {
+					alert('This picture is not available.');
+					success = false;
+				} else if(this._img.naturalWidth < this._fullWidth || this._img.naturalHeight < this._fullHeight) {
 					alert('This picture is too small. Need at least ' + this._fullWidth + 'x' + this._fullHeight + 'pixels (got ' + this._img.naturalWidth + 'x' + this._img.naturalHeight+').');
 					success = false;
 				} else {
@@ -348,7 +351,6 @@ window.cleverCover = (function() {
 			})();
 
 			var globSuccess;
-			url_cover = 'img.php?url='+encodeURIComponent(url_cover);
 			canvas['cover'].setImage(url_cover, function(success) {
 				if(success) {
 					jQuery('#canvas_cover').drag(function(data) {
@@ -358,7 +360,6 @@ window.cleverCover = (function() {
 				manageSuccess(success);
 			});
 			if(splited) {
-				url_avatar = 'img.php?src='+encodeURIComponent(url_avatar);
 				canvas['avatar'].setImage(url_avatar, function(success) {
 					if(success) {
 						jQuery('#canvas_picture').drag(function(data) {
