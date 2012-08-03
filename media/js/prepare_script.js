@@ -121,8 +121,11 @@ jQuery.fn.extend({
 
 		// if we choose upload, send to an iframe and wait until it's loaded
 		if(params[field+'_origin'] === 'upload') {
-			fuajax(jQuery('#timeline .step.active form.upload_picture')[0], function(url) {
-				callback.apply(this, [url]);
+			fuajax(jQuery('#timeline .step.active form.upload_picture')[0], function(content) {
+				if (content.match(/^[A-Za-z0-9#./]+$/))
+					callback.apply(this, [content]);
+				else
+					alert('Cannot upload file. Maybe too large?')
 			}.bind(this));
 		}
 		// else we do not have to generate one

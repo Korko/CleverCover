@@ -124,29 +124,30 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			</script>
 		</div>
 
-        <script type="text/javascript">
-            var _gaq = _gaq || [];
-            _gaq.push(['_setAccount', 'UA-22420319-1']);
-            _gaq.push(['_setDomainName', 'korko.fr']);
-            _gaq.push(['_trackPageview']);
+		<script type="text/javascript">
+			var _gaq = _gaq || [];
+			_gaq.push(['_setAccount', 'UA-22420319-1']);
+			_gaq.push(['_setDomainName', 'korko.fr']);
+			_gaq.push(['_trackPageview']);
 
-            asyncjs('http://www.google-analytics.com/ga.js');
-        </script>
-	<script type="text/javascript">
-		var on = function() {
-                        var step = jQuery(this).parents('.step').prop('id');
-                        step = /step_(.+)/.exec(step)[1];
-                        choose(step, jQuery(this).data('value'));
-                };
-		jQuery(document)
-			.on('click', '.step.active a[data-value]', on)
-			.on('change', '.step.active input[data-value]', on);
-<?php
-	function jsescape($str) { return str_replace("'", "\'", $str); };
-	foreach($_GET as $choice => $value) {
-		echo "choose('".jsescape($choice)."', '".jsescape($value)."');\n";
-	}
-?>
-	</script>
+			asyncjs('http://www.google-analytics.com/ga.js');
+		</script>
+		<script type="text/javascript">
+			var on = function() {
+				var step = jQuery(this).parents('.step').prop('id');
+				step = /step_(.+)/.exec(step)[1];
+				choose(step, jQuery(this).data('value'));
+			};
+			jQuery(document)
+				.on('click', '.step.active a[data-value]', on)
+				.on('change', '.step.active input[data-value]', on);
+
+			<?php
+				function jsescape($str) { return str_replace("'", "\'", $str); };
+				foreach($_GET as $choice => $value) {
+					echo "choose('".jsescape($choice)."', '".jsescape($value)."');\n";
+				}
+			?>
+		</script>
 	</body>
 </html>
