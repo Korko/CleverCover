@@ -1,7 +1,5 @@
 <?php
 
-include('statsd.php');
-
 // Sanitize params
 function filter_enum($var, $enum, $default = null) {
 	return in_array($var, $enum) ? $var : $default;
@@ -12,8 +10,6 @@ $cover = filter_var($_REQUEST['cover'], FILTER_VALIDATE_URL) or die('Invalid cov
 $avatar = isset($_REQUEST['avatar']) ? filter_var($_REQUEST['avatar'], FILTER_VALIDATE_URL) : false;
 
 $special = isset($_REQUEST['special']) && $_REQUEST['special'] ? 1 : 0;
-
-StatsD::increment('clevercover.cover.'.$site.'.'.$special);
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
 
