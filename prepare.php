@@ -109,17 +109,15 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 								</label>
 							</span>
 							<span>
-								<label class="button disabled">
+								<label class="button">
 									<img src="media/image/Folder.png" /> Local picture
-									<input type="file" class="picture_file" name="media" data-value="upload" accept="image/*"/>
+									<input type="file" class="picture_file" name="img" data-value="upload" accept="image/*" />
 								</label>
 							</span>
 						</div>
 						<div class="upload_fields">
 							<input type="text" class="picture_url" name="picture_url" placeholder="URL of the picture" required="required" />
-							<input type="hidden" name="key" value="245BDFGU01bf81c0d51e350622385c569d4acc75" />
-							<input type="hidden" name="success_url" value="http://<?php echo $_SERVER['SERVER_NAME'].dirname($_SERVER['SCRIPT_NAME']); ?>/imageshack.php?s=%s&b=%b&i=%i" />
-							<p><input type="submit" class="picture_send" value="Generate your Cover"/></p>
+							<p><input type="submit" class="picture_send" value="Generate your Cover" /></p>
 						</div>
 					</form>
 				</div>

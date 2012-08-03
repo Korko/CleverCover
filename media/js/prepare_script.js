@@ -71,7 +71,7 @@ jQuery.fn.extend({
 	};
 
 	window.choose = function(field, value) {
-		var $button = $('#step_'+field+' a[data-value="'+value+'"]');
+		var $button = $('#step_'+field+' [data-value="'+value+'"]');
 		if($button.length === 0) {
 			return;
 		}
@@ -91,6 +91,8 @@ jQuery.fn.extend({
 		}
 
 		var callback = function(url) {
+			url = window.location.protocol+'//'+window.location.host+url;
+
 			if (!params['cover'] || !params['splited']) {
 				params['cover'] = url;
 			} else {
@@ -127,7 +129,7 @@ jQuery.fn.extend({
 		else {
 			$.ajax('img.php?url='+$('#timeline .step.active input.picture_url').val(), {
 				success: function(data) {
-					callback.apply(this, [window.location.protocol+'//'+window.location.host+data]);
+					callback.apply(this, [data]);
 				}
 			});
 			return false;
