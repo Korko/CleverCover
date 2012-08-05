@@ -6,6 +6,10 @@ html, body {
 	overflow: hidden;
 }
 
+body.wait {
+	cursor: wait;
+}
+
 #template {
 	display: none;
 }

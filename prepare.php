@@ -91,7 +91,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 					</span>
 					<span>
 						<a class="button" href="#" data-value="1">
-							Page
+							Fan Page
 						</a>
 					</span>
 				</div>

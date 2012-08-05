@@ -119,20 +119,27 @@ jQuery.fn.extend({
 			}
 		};
 
+		function callMeBack(url, that) {
+			if (!url.match(/^[A-Za-z0-9#./]+$/))
+				return false;
+
+			callback.apply(that, [url]);
+			return true;
+		}
+
 		// if we choose upload, send to an iframe and wait until it's loaded
 		if(params[field+'_origin'] === 'upload') {
 			fuajax(jQuery('#timeline .step.active form.upload_picture')[0], function(content) {
-				if (content.match(/^[A-Za-z0-9#./]+$/))
-					callback.apply(this, [content]);
-				else
-					alert('Cannot upload file. Maybe too large?')
+				callMeBack(content, this) || alert('Cannot upload file. Maybe too large?');
 			}.bind(this));
 		}
 		// else we do not have to generate one
 		else {
+			$('body').addClass('wait');
 			$.ajax('img.php?url='+$('#timeline .step.active input.picture_url').val(), {
 				success: function(data) {
-					callback.apply(this, [data]);
+					callMeBack(data, this) || alert('Cannot use this image.');
+					$('body').removeClass('wait');
 				}
 			});
 			return false;
