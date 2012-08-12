@@ -100,22 +100,10 @@ jQuery.fn.extend({
 			}
 
 			if (!params['splited'] || (params['splited'] && params['avatar'])) {
-				var form = c('form', {
-					attributes: {
-						method: "post",
-						action: "cover.php"
-					}
-				});
-				$.each(params, function(key, value) {
-					form.appendChild(c('input', {
-						attributes: {
-							type: 'hidden',
-							name: key,
-							value: value
-						}
-					}));
-				});
-				form.submit();
+				formSubmit({
+					method: "post",
+					action: "cover.php"
+				}, params);
 			}
 		};
 
