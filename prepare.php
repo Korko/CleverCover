@@ -5,7 +5,7 @@ $css = array(
 	'prepare_style'
 );
 $js = array(
-	'http://code.jquery.com/jquery.js',
+	'jquery-1.8.0.min',
 	'jquery.support',
 	'toolbox',
 	'prepare_script'
