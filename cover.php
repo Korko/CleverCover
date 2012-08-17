@@ -19,7 +19,7 @@ $css = array(
 	'pageguide.min'
 );
 $js = array(
-	'jquery-1.7.1.min',
+	'http://code.jquery.com/jquery.js',
 	'jquery.support',
 	'jquery.drag',
 	'jquery.identify',

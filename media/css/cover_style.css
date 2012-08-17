@@ -164,6 +164,9 @@ body {
 #popup_header {
 	display: none;
 }
+#popup_header a {
+	color: #FFF;
+}
 
 #popup.closable #popup_header {
 	position: absolute;
@@ -191,6 +194,9 @@ body {
 }
 #popup_content.cover_save p {
 	text-align: left;
+}
+#popup_content.cover_save img {
+	cursor: pointer;
 }
 #popup_content.cover_save img:last-child {
 	margin-left: 10px;
