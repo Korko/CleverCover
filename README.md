@@ -2,7 +2,7 @@ Clever Cover
 ============
 
 WebApplication to simply create both cover and profile picture
-for social networks like Facebook or Google Plus.
+for social networks like Facebook, Google+ or Twitter.
 
 Home
 ----
