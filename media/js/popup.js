@@ -54,7 +54,7 @@ var popup = (function($) {
 				opacity : 0,
 			}, function() {
 				// compute size
-				content.append(html).css({
+				content.html(html).css({
 					position : 'absolute',
 					top : '-10000px',
 					width : 'auto',
