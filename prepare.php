@@ -53,6 +53,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 		<div id="examples">
 			<img src="media/image/example_google.png" title="Example of what CleverCover will help you realize" class="thumb" />
 			<img src="media/image/example_facebook.png" title="Example of what CleverCover will help you realize" class="thumb" />
+			<img src="media/image/example_twitter.png" title="Example of what CleverCover will help you realize" class="thumb" />
 		</div>
 		<div id="timeline">
 			<div id="step_site" class="step active">
@@ -60,6 +61,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				<div class="content">
 					<a href="#" data-value="google"><img src="media/image/Google.png" alt="Google" title="Google" /></a>
 					<a href="#" data-value="facebook"><img src="media/image/Facebook.png" alt="Facebook" title="Facebook" /></a>
+					<a href="#" data-value="twitter"><img src="media/image/Twitter.png" alt="Twitter" title="Twitter" /></a>
 				</div>
 			</div>
 		</div>

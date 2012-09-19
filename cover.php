@@ -5,7 +5,7 @@ function filter_enum($var, $enum, $default = null) {
 	return in_array($var, $enum) ? $var : $default;
 }
 
-$site = filter_enum($_REQUEST['site'], array('facebook', 'google'), 'facebook');
+$site = filter_enum($_REQUEST['site'], array('facebook', 'google', 'twitter'), 'facebook');
 $cover = filter_var($_REQUEST['cover'], FILTER_VALIDATE_URL) or die('Invalid cover url');
 $avatar = isset($_REQUEST['avatar']) ? filter_var($_REQUEST['avatar'], FILTER_VALIDATE_URL) : false;
 

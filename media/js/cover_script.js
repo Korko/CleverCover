@@ -290,6 +290,20 @@ window.cleverCover = (function() {
 						left : 27,
 						top : 215
 					};
+
+				case 'twitter':
+					params.cover = {
+						width : 520,
+						height : 260
+					};
+					params.avatar = {
+						width : 73,
+						height : 73
+					};
+					params.link = {
+						left : 223,
+						top : 24
+					};
 			}
 			params.type = type;
 

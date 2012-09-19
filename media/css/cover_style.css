@@ -64,6 +64,12 @@ body {
 #content_inner.facebook.special #canvas_picture {
 	top: 211px;
 }
+#content_inner.twitter #canvas_picture {
+	border: 4px solid white;
+	position: absolute;
+	left: 219px;
+	top: 20px;
+}
 #content_inner.facebook {
 	width: 850px;
 	height: 370px;
