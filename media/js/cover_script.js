@@ -367,9 +367,13 @@ window.cleverCover = (function() {
 			var globSuccess;
 			canvas['cover'].setImage(url_cover, function(success) {
 				if(success) {
-					jQuery('#canvas_cover').drag(function(data) {
+					var fn = function(data) {
 						canvas['cover'].move(data);
-					});
+					};
+					jQuery('#canvas_cover').drag(fn);
+					if(!splited) {
+						jQuery('#canvas_picture').drag(fn);
+					}
 				}
 				manageSuccess(success);
 			});
