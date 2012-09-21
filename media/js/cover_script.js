@@ -43,6 +43,7 @@ var ResizableCanvas = (function() {
 		this._minRatio = 0;
 		this._opacity = 1;
 		this._flipFactor = 1;
+		this._blurFactor = 0;
 
 		this._events = {};
 
@@ -64,6 +65,10 @@ var ResizableCanvas = (function() {
 			}
 			context.translate(this._flipFactor*(-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
 			context.drawImage(this._img, 0, 0);
+
+			if(this._blurFactor > 0) {
+				stackBlurCanvasRGB(this._id, 0, 0, this._fullWidth, this._fullHeight, this._blurFactor);
+			}
 
 			context.restore();
 		};
@@ -232,6 +237,11 @@ var ResizableCanvas = (function() {
 				this.draw();
 			}, [], true);
 		};
+
+		this.blur = function(factor) {
+			this._blurFactor = factor;
+			this.draw();
+		};
 	};
 })();
 
@@ -343,7 +353,7 @@ window.cleverCover = (function() {
 						content = content.add(div);
 						popup.content(content, true, 'cover_save');
 					});
-					$('input[name="cover_slider_choice"]').change(function() {
+					$('input[name="cover_choice"]').change(function() {
 						slider_choice = $(this).val();
 					});
 				};
@@ -392,9 +402,12 @@ window.cleverCover = (function() {
 				});
 			}
 
-			Scroller.bind('cover_slider', 100, 1, function(ratio) {
+			Scroller.bind('cover_ratio', 100, 1, function(ratio) {
 				canvas[slider_choice].changeRatio(ratio);
-			});
+			}, 100);
+			Scroller.bind('cover_blur', 100, 1, function(ratio) {
+				canvas[slider_choice].blur(ratio);
+			}, 0);
 			jQuery('#cover_flip input').change(function() {
 				canvas[slider_choice].flip();
 			});
@@ -411,8 +424,16 @@ window.cleverCover = (function() {
 
 function Scroller() {
 	var SCROLLER_WIDTH = 5;
+	var params = {};
 
-	this.init = function(id, max, step, callback) {
+	this.init = function(id, max, step, callback, defaultValue) {
+		defaultValue = defaultValue === undefined ? max : defaultValue;
+		params = {
+			id: id,
+			max: max,
+			step: step,
+			defaultValue: defaultValue
+		};
 		var maxWidth = max * SCROLLER_WIDTH / step;
 		// Every SCROLLER_WIDTH, we gain 1 step until max
 
@@ -424,7 +445,8 @@ function Scroller() {
 			id : id + '_scroller',
 			className : 'scroller_drag'
 		});
-		$(id).appendChild(scroller).style.left = maxWidth - SCROLLER_WIDTH + 'px';
+		$(id).appendChild(scroller);
+		this.setValue(defaultValue);
 
 		jQuery(scroller).drag(function(data) {
 			var old = parseInt(scroller.style.left, 10) || 0;
@@ -432,6 +454,11 @@ function Scroller() {
 			scroller.style.left = Math.min(value, maxWidth - SCROLLER_WIDTH) + 'px';
 			callback(r(value / SCROLLER_WIDTH, step));
 		});
+	};
+
+	this.setValue = function(val) {
+		var maxWidth = params.max * SCROLLER_WIDTH / params.step;
+		$(params.id + '_scroller').style.left = mm(0, val * SCROLLER_WIDTH / params.step, maxWidth - SCROLLER_WIDTH) + 'px'; 
 	};
 
 	this.unbind = function(id) {

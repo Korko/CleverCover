@@ -119,19 +119,19 @@ body {
 	cursor: pointer;
 }
 
-#cover_slider_choice {
+#cover_choice {
 	display: none;
 }
-#content.splited #cover_slider_choice {
+#content.splited #cover_choice {
 	display: inline-block;
 	height: 50px;
 }
-#cover_slider_choice label {
+#cover_choice label {
 	line-height: 25px;
 	height: 25px;
 	display: block;
 }
-#content.splited #cover_slider {
+#content.splited #cover_ratio {
 	top: -19px;
 }
 

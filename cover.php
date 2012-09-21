@@ -19,6 +19,7 @@ $css = array(
 	'pageguide.min'
 );
 $js = array(
+	'StackBlur',
 	'jquery-1.8.0.min',
 	'jquery.support',
 	'jquery.drag',
@@ -85,12 +86,13 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				<canvas id="canvas_picture"></canvas>
 			</div>
 			<div>
-				<div id="cover_slider_choice">
-					<label><input type="radio" name="cover_slider_choice" value="cover" checked="checked" />Cover</label>
-					<label><input type="radio" name="cover_slider_choice" value="avatar" />Avatar</label>
+				<div id="cover_choice">
+					<label><input type="radio" name="cover_choice" value="cover" checked="checked" />Cover</label>
+					<label><input type="radio" name="cover_choice" value="avatar" />Avatar</label>
 				</div>
-				<div id="cover_slider"></div>
-				<div id="cover_flip"><label>Reverse? <input type="checkbox" name="flip" /></div>
+				<div>Change Ratio<div id="cover_ratio"></div></div>
+				<div id="cover_flip"><label>Reverse? <input type="checkbox" name="flip" /></label></div>
+				<div>Blur<div id="cover_blur"></div></div>
 			</div>
 		</div>
 		<div id="comments">
