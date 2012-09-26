@@ -331,34 +331,41 @@ window.cleverCover = (function() {
 			}
 
 			jQuery((function($) {
-				return function() {
-					$('#content').addClass(splited ? 'splited' : '');
-					$('#content_inner').addClass(type+' '+(special ? 'special' : ''));
-					$('#save').click(function() {
-						var data = canvas['cover'].save();
-						if(splited) {
-							data.push(canvas['avatar'].save());
-						}
+				$('#content').addClass(splited ? 'splited' : '');
+				$('#content_inner').addClass(type+' '+(special ? 'special' : ''));
+				$('#save').click(function() {
+					var data = canvas['cover'].save();
+					if(splited) {
+						data.push(canvas['avatar'].save());
+					}
 
-						var div = $('<div>');
-						$.each(data, function(id, data) {
-							var node = c('img');
-							node.style.height = '100px';
-							node.setAttribute('src', data);
-							$(node).bind('click', function() {
-								jQuery.download('img.php', 'src='+data);
-							});
-							div.append(node);
+					var div = $('<div>');
+					$.each(data, function(id, data) {
+						var node = c('img');
+						node.style.height = '100px';
+						node.setAttribute('src', data);
+						$(node).bind('click', function() {
+							jQuery.download('img.php', 'src='+data);
 						});
+						div.append(node);
+					});
 
-						var content = $('<p>Here\'s your avatar and your cover, just save them by clicking on each one and put them directly to your favorite social network.</p>');
-						content = content.add(div);
-						popup.content(content, true, 'cover_save');
-					});
-					$('input[name="cover_choice"]').change(function() {
-						slider_choice = $(this).val();
-					});
-				};
+					var content = $('<p>Here\'s your avatar and your cover, just save them by clicking on each one and put them directly to your favorite social network.</p>');
+					content = content.add(div);
+					popup.content(content, true, 'cover_save');
+				});
+                        	$('input[name="cover_ratio"]').on('change', function() {
+                                	canvas[slider_choice].changeRatio($(this).val());
+                        	});
+                                $('input[name="cover_blur"]').on('change', function() {
+                                        canvas[slider_choice].blur($(this).val());
+                                });
+				$('input[name="cover_choice"]').change(function() {
+					slider_choice = $(this).val();
+				});
+                        	$('input[name="cover_flip"]').change(function() {
+                                	canvas[slider_choice].flip();
+                        	});
 			})(jQuery));
 
 			var manageSuccess = (function() {
@@ -403,16 +410,6 @@ window.cleverCover = (function() {
 					manageSuccess(success);
 				});
 			}
-
-			Scroller.bind('cover_ratio', 100, 1, function(ratio) {
-				canvas[slider_choice].changeRatio(ratio);
-			}, 100);
-			Scroller.bind('cover_blur', 100, 1, function(ratio) {
-				canvas[slider_choice].blur(ratio);
-			}, 0);
-			jQuery('#cover_flip input').change(function() {
-				canvas[slider_choice].flip();
-			});
 		},
 		help: function() {
 			jQuery('#overlay').show();
@@ -420,66 +417,44 @@ window.cleverCover = (function() {
 	};
 })();
 
-/**
- * Generate a scroller
- */
-
-function Scroller() {
-	var SCROLLER_WIDTH = 5;
-	var params = {};
-
-	this.init = function(id, max, step, callback, defaultValue) {
-		defaultValue = defaultValue === undefined ? max : defaultValue;
-		params = {
-			id: id,
-			max: max,
-			step: step,
-			defaultValue: defaultValue
-		};
-		var maxWidth = max * SCROLLER_WIDTH / step;
-		// Every SCROLLER_WIDTH, we gain 1 step until max
-
-		$(id).className = $(id).className + ' scroller';
-		$(id).style.width = maxWidth + 'px';
-		$(id).style.display = 'inline-block';
-
-		var scroller = c('div', {
-			id : id + '_scroller',
-			className : 'scroller_drag'
-		});
-		$(id).appendChild(scroller);
-		this.setValue(defaultValue);
-
-		jQuery(scroller).drag(function(data) {
-			var old = parseInt(scroller.style.left, 10) || 0;
-			var value = mm(0, old + data.dx, maxWidth);
-			scroller.style.left = Math.min(value, maxWidth - SCROLLER_WIDTH) + 'px';
-			callback(r(value / SCROLLER_WIDTH, step));
-		});
-	};
-
-	this.setValue = function(val) {
-		var maxWidth = params.max * SCROLLER_WIDTH / params.step;
-		$(params.id + '_scroller').style.left = mm(0, val * SCROLLER_WIDTH / params.step, maxWidth - SCROLLER_WIDTH) + 'px'; 
-	};
-
-	this.unbind = function(id) {
-		jQuery(id + '_scroller').undrag();
-		$(id).removeChild($(id + '_scroller'));
-	};
+if(!jQuery.support.input_slide) {
+	jQuery(function($){
+        	// loop through all <input type=range/>
+        	// on the page
+        	$("input[type=range]").each(function(){
+            		var range = $(this);
+                	
+			// Create <div/> to hold jQuery UI Slider
+            		var sliderDiv = $("<div/>");
+            		sliderDiv.width(range.width());
+			            
+            		// Insert jQuery UI Slider where the
+            		// <input type=range/> is located
+            		range.after(
+                		sliderDiv.slider({
+                    			// Set values that are set declaratively
+                    			// in the <input type=range/> element
+                    			min: parseFloat(range.attr("min")),
+                    			max: parseFloat(range.attr("max")),
+                    			value: parseFloat(range.val()),
+                    			step: parseFloat(range.attr("step")),
+                    			// Update the <input type=range/> when
+                    			// value of slider changes
+                    			slide: function(evt, ui) {
+                        			range.val(ui.value);
+                    			},
+                    			change: function(evt, ui) {
+                        			// set <input type=range/> value
+                        			range.val(ui.value);
+						range.change();
+                    			}
+        			})
+        		).
+        		// Hide <input type=range/> from display
+        		hide();
+        	});
+	});
 }
-
-Scroller.bind = (function() {
-	var binded = {};
-
-	return function(id) {
-		if(binded[id]) {
-			binded[id].unbind(id);
-		}
-		binded[id] = new Scroller();
-		binded[id].init.apply(binded[id], arguments);
-	};
-})();
 
 if(!jQuery.support.canvas) {
 	alert("I'm sorry but your browser seems not to be able to support CleverCover. Please use Chrome or Firefox instead. Thanks.");

@@ -16,11 +16,13 @@ $siteUrl = 'http://www.korko.fr/clevercover/';
 $css = array(
 	'style',
 	'cover_style',
-	'pageguide.min'
+	'pageguide.min',
+	'smoothness/jquery-ui-1.8.23.custom'
 );
 $js = array(
 	'StackBlur',
 	'jquery-1.8.0.min',
+	'jquery-ui-1.8.23.min',
 	'jquery.support',
 	'jquery.drag',
 	'jquery.identify',
@@ -90,9 +92,9 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 					<label><input type="radio" name="cover_choice" value="cover" checked="checked" />Cover</label>
 					<label><input type="radio" name="cover_choice" value="avatar" />Avatar</label>
 				</div>
-				<div>Change Ratio<div id="cover_ratio"></div></div>
-				<div id="cover_flip"><label>Reverse? <input type="checkbox" name="flip" /></label></div>
-				<div>Blur<div id="cover_blur"></div></div>
+				<div><label>Change Ratio <input type="range" name="cover_ratio" min="0" max="100" value="100" step="1" /></label></div>
+				<div><label>Reverse? <input type="checkbox" name="cover_flip" /></label></div>
+				<div><label>Blur <input type="range" name="cover_blur" min="0" max="100" value="0" step="1" /></label></div>
 			</div>
 		</div>
 		<div id="comments">
