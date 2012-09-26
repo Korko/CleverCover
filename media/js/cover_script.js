@@ -300,6 +300,7 @@ window.cleverCover = (function() {
 						left : 27,
 						top : 215
 					};
+					break;
 
 				case 'twitter':
 					params.cover = {
@@ -314,6 +315,7 @@ window.cleverCover = (function() {
 						left : 223,
 						top : 24
 					};
+					break;
 			}
 			params.type = type;
 
