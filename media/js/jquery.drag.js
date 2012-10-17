@@ -15,6 +15,7 @@
 	var mousePos = null;
 
 	jQuery(document).bind('mouseup', function() {
+		jQuery(document.body).removeClass('unselectable');
 		draggedCallback = null;
 		mousePos = null;
 	});
@@ -43,6 +44,7 @@
 	jQuery.fn.extend({
 		drag : function(callback) {
 			return this.bind('mousedown.drag', function() {
+				jQuery(document.body).addClass('unselectable');
 				draggedCallback = callback;
 			});
 		},
