@@ -115,3 +115,15 @@ label input[type="file"] {
 img.thumb {
     width: 300px;
 }
+
+#comments {
+        width: 470px;
+        margin: auto;
+        margin-top: 10px;
+        text-align: center;
+	position: relative;
+	z-index: 2;
+	height: 350px;
+	overflow-x: hidden;
+	overflow-y: auto;
+}}

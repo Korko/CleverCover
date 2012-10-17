@@ -1,5 +1,7 @@
 <?php
 
+$siteUrl = 'http://www.korko.fr/clevercover/';
+
 $css = array(
 	'style',
 	'prepare_style'
@@ -125,7 +127,11 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				</div>
 			</script>
 		</div>
-
+                <div id="comments">
+                        <p>Why not leave a message for other users or the developer?</p>
+			<script type="text/javascript">asyncjs('http://connect.facebook.net/fr_FR/all.js#xfbml=1', 'facebook-jssdk');</script>
+                        <div class="fb-comments" data-href="<?= $siteUrl ?>" data-num-posts="2" data-width="470"></div>
+                </div>
 		<script type="text/javascript">
 			var _gaq = _gaq || [];
 			_gaq.push(['_setAccount', 'UA-22420319-1']);
