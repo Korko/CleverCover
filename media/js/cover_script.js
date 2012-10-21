@@ -44,6 +44,8 @@ var ResizableCanvas = (function() {
 		this._opacity = 1;
 		this._flipFactor = 1;
 		this._blurFactor = 0;
+		this._colorMask = "#000";
+		this._colorMaskOpacity = 0;
 
 		this._events = {};
 
@@ -63,12 +65,15 @@ var ResizableCanvas = (function() {
 				context.translate(this._fullWidth/this._ratio, 0);
 				context.scale(-1, 1);
 			}
-			context.translate(this._flipFactor*(-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
-			context.drawImage(this._img, 0, 0);
+			context.drawImage(this._img, this._flipFactor*(-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
 
-			if(this._blurFactor > 0) {
-				stackBlurCanvasRGB(this._id, 0, 0, this._fullWidth, this._fullHeight, this._blurFactor);
-			}
+			context.fillStyle = this._colorMask;
+			context.globalAlpha = this._colorMaskOpacity / 100;
+			context.fillRect(0, 0, this._fullWidth, this._fullHeight);
+
+                        if(this._blurFactor > 0) {
+                                stackBlurCanvasRGB(this._id, 0, 0, this._fullWidth, this._fullHeight, this._blurFactor);
+                        }
 
 			context.restore();
 		};
@@ -242,6 +247,14 @@ var ResizableCanvas = (function() {
 			this._blurFactor = factor;
 			this.draw();
 		};
+
+		this.colorMask = function(color, opacity) {
+			this._propagate(function() {
+				this._colorMask = color;
+				this._colorMaskOpacity = opacity;
+				this.draw();
+			}, [], true);
+		};
 	};
 })();
 
@@ -366,6 +379,9 @@ window.cleverCover = (function() {
                         	$('input[name="cover_flip"]').change(function() {
                                 	canvas[slider_choice].flip();
                         	});
+				$('input[name="color_mask"],input[name="color_mask_opacity"]').change(function() {
+					canvas[slider_choice].colorMask($('input[name="color_mask"]').val(), $('input[name="color_mask_opacity"]').val());
+				});
 			})(jQuery));
 
 			var manageSuccess = (function() {

@@ -95,6 +95,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				<div><label>Change Ratio <input type="range" name="cover_ratio" min="0" max="100" value="100" step="1" /></label></div>
 				<div><label>Reverse? <input type="checkbox" name="cover_flip" /></label></div>
 				<div><label>Blur <input type="range" name="cover_blur" min="0" max="100" value="0" step="1" /></label></div>
+				<div><label>Color mask <input type="color" name="color_mask" /></label><input type="range" name="color_mask_opacity" min="0" max="100" value="0" step="1" /></div>
 			</div>
 		</div>
 		<div id="comments">
