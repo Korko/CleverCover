@@ -57,9 +57,10 @@ body {
 #content_inner.facebook #canvas_picture {
 	background-color: #FFF;
 	border: 4px solid white;
+	padding: 1px;
 	position: absolute;
-	top: 194px;
-	left: 23px;
+	top: 192px;
+	left: 13px;
 }
 #content_inner.facebook.special #canvas_picture {
 	top: 211px;
@@ -71,7 +72,7 @@ body {
 	top: 20px;
 }
 #content_inner.facebook {
-	width: 850px;
+	width: 851px;
 	height: 370px;
 }
 #content_inner.google {

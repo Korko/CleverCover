@@ -217,3 +217,7 @@ function isElement(obj) {
       (typeof obj.ownerDocument ==="object");
   }
 }
+
+function getImageWeight(dataUrl) {
+  return atob(dataUrl.substr(dataUrl.indexOf('base64,') + 7)).length;
+}

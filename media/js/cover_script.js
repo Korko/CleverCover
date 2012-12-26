@@ -35,6 +35,7 @@ var ResizableCanvas = (function() {
 		this._top = 0;
 		this._right = 0;
 		this._bottom = 0;
+		this._maxWeight = params.weight;
 
 		this._img = null;
 		this._x = 0;
@@ -67,6 +68,8 @@ var ResizableCanvas = (function() {
 			}
 			context.drawImage(this._img, this._flipFactor*(-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
 
+			context.restore();
+
 			context.fillStyle = this._colorMask;
 			context.globalAlpha = this._colorMaskOpacity / 100;
 			context.fillRect(0, 0, this._fullWidth, this._fullHeight);
@@ -74,8 +77,6 @@ var ResizableCanvas = (function() {
                         if(this._blurFactor > 0) {
                                 stackBlurCanvasRGB(this._id, 0, 0, this._fullWidth, this._fullHeight, this._blurFactor);
                         }
-
-			context.restore();
 		};
 
 		// draw the canvas
@@ -213,7 +214,7 @@ var ResizableCanvas = (function() {
 			}, [], true);
 		};
 
-		this.save = function() {
+		this.save = function(callback) {
 			return this._propagate(function() {
 				var saveCanvas = $(this._id);
 
@@ -225,14 +226,25 @@ var ResizableCanvas = (function() {
 						}
 					});
 
-					var context = saveCanvas.getContext('2d');
-					this._draw(context, this._width / this._extractWidth);
+					var ratio = this._width / (this._extractExpand ? this._extractWidth : this._width);
+					this._draw(saveCanvas.getContext('2d'), ratio);
 				}
 
-				// L'image de la couverture que nous pourrons sauvegarder est en fait une chaîne sous forme base64
-				// e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAgA...
-				// Fonctionnalité permise par un canvas si l'origine de l'image est sûre (même domaine) d'où le fichier php "img.php" plus bas
-				return saveCanvas.toDataURL();
+				(function(canvas, maxWeight, callback) {
+					(function loopfn(compression, oldSize) {
+	                                        // L'image de la couverture que nous pourrons sauvegarder est en fait une chaîne sous forme base64
+        	                                // e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAgA...
+                	                        // Fonctionnalité permise par un canvas si l'origine de l'image est sûre (même domaine) d'où le fichier php "img.php" plus bas
+                        	                data = saveCanvas.toDataURL('image/jpeg', compression);
+                                	        (this._maxWeight && getImageWeight(data, function(size) {
+							if(size !== oldSize && size > maxWeight) {
+								loopfn(compression + 0.1, size);
+							} else {
+								callback(data);
+							}
+						})) || callback(data);
+					})();
+				})(saveCanvas, this._maxWeight, callback);
 			}, [], true);
 		};
 
@@ -297,21 +309,23 @@ window.cleverCover = (function() {
 
 				case 'facebook':
 					params.cover = {
-						width : 850,
-						height : 313
+						width : 851,
+						height : 315,
+						weight : 100
 					};
 					params.avatar = {
 						width : 160,
 						height : 160,
 						extractWidth : 180,
-						extractHeight : 180
+						extractHeight : 180,
+						extractExpand : false
 					};
 					params.link = !special ? {
-						left : 27,
-						top : 198
+						left : 18,
+						top : 197
 					} : {
-						left : 27,
-						top : 215
+						left : 18,
+						top : 228
 					};
 					break;
 
@@ -347,25 +361,34 @@ window.cleverCover = (function() {
 				$('#content').addClass(splited ? 'splited' : '');
 				$('#content_inner').addClass(type+' '+(special ? 'special' : ''));
 				$('#save').click(function() {
-					var data = canvas['cover'].save();
+					var data = [];
+					canvas['cover'].save(function(coverData) {
+						data.push(coverData);
+						(!splited || data.length === 2) && fncb();
+					});
 					if(splited) {
-						data.push(canvas['avatar'].save());
+						canvas['avatar'].save(function(avatarData) {
+							data.push(avatarData);
+							data.length === 2 && fncb();
+						});
 					}
 
-					var div = $('<div>');
-					$.each(data, function(id, data) {
-						var node = c('img');
-						node.style.height = '100px';
-						node.setAttribute('src', data);
-						$(node).bind('click', function() {
-							jQuery.download('img.php', 'src='+data);
+					function fncb() {
+						var div = $('<div>');
+						$.each(data, function(id, data) {
+							var node = c('img');
+							node.style.height = '100px';
+							node.setAttribute('src', data);
+							$(node).bind('click', function() {
+								jQuery.download('img.php', 'src='+data);
+							});
+							div.append(node);
 						});
-						div.append(node);
-					});
 
-					var content = $('<p>Here\'s your avatar and your cover, just save them by clicking on each one and put them directly to your favorite social network.</p>');
-					content = content.add(div);
-					popup.content(content, true, 'cover_save');
+						var content = $('<p>Here\'s your avatar and your cover, just save them by clicking on each one and put them directly to your favorite social network.</p>');
+						content = content.add(div);
+						popup.content(content, true, 'cover_save');
+					}
 				});
                         	$('input[name="cover_ratio"]').on('change', function() {
                                 	canvas[slider_choice].changeRatio($(this).val());
