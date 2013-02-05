@@ -27,6 +27,8 @@ var ResizableCanvas = (function() {
 		this._height = params.height;
 		this._extractWidth = params.extractWidth || params.width;
 		this._extractHeight = params.extractHeight || params.height;
+		this._extractExpand = params.extractExpand;
+		this._extractExtraGap = params.extractExtraGap;
 
 		this._links = {};
 		this._fullWidth = params.width;
@@ -54,7 +56,7 @@ var ResizableCanvas = (function() {
 		 *	  Methods	  *
 		 ********************/
 
-		this._draw = function(context, subratio) {
+		this._draw = function(context, subratio, xgap, ygap) {
 			context.clearRect(0, 0, this._fullWidth, this.fullHeight);
 			context.save();
 			context.globalAlpha = this._opacity;
@@ -66,7 +68,10 @@ var ResizableCanvas = (function() {
 				context.translate(this._fullWidth/this._ratio, 0);
 				context.scale(-1, 1);
 			}
-			context.drawImage(this._img, this._flipFactor*(-this._x-this._left)/this._ratio, (-this._y-this._top)/this._ratio);
+
+			xgap = xgap || 0;
+			ygap = ygap || 0;
+			context.drawImage(this._img, this._flipFactor*((-this._x-this._left)/this._ratio+xgap), (-this._y-this._top)/this._ratio+ygap);
 
 			context.restore();
 
@@ -226,8 +231,13 @@ var ResizableCanvas = (function() {
 						}
 					});
 
-					var ratio = this._width / (this._extractExpand ? this._extractWidth : this._width);
-					this._draw(saveCanvas.getContext('2d'), ratio);
+					var xgap = this._extractExtraGap, ygap = xgap;
+					if(!this._extractExpand) {
+						xgap += (this._extractWidth - this._width) / 2;
+						ygap += (this._extractHeight - this._height) / 2;
+					}
+
+					this._draw(saveCanvas.getContext('2d'), 1, xgap, ygap);
 				}
 
 				(function(canvas, maxWeight, callback) {
@@ -318,11 +328,11 @@ window.cleverCover = (function() {
 						height : 160,
 						extractWidth : 180,
 						extractHeight : 180,
-						extractExpand : false
+						extractExtraGap : 1
 					};
 					params.link = !special ? {
-						left : 18,
-						top : 197
+						left : 29,
+						top : 200
 					} : {
 						left : 18,
 						top : 228
