@@ -49,7 +49,7 @@ if (isset($_GET['url']) || (isset($_FILES['img']) && !$_FILES['img']['error'] &&
 	imagedestroy($im2);
 	imagedestroy($image);
 
-	echo substr($_SERVER["PHP_SELF"], 0, strrpos($_SERVER['PHP_SELF'], '/')).'/'.$filename.'#'.time();
+	echo substr($_SERVER["DOCUMENT_URI"], 0, strrpos($_SERVER['DOCUMENT_URI'], '/')).'/'.$filename.'#'.time();
 } else if (isset($_POST['src'])) {
 	$src = $_POST['src'];
 
