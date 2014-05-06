@@ -31,6 +31,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 		<meta property="og:title" content="CleverCover" />
 		<meta property="og:site_name" content="CleverCover" />
 		<meta property="og:image" content="http://korko.fr/clevercover/media/image/example_facebook.png" />
+		<meta property="fb:app_id" content="331564836913559" />
 
 		<link rel="stylesheet" href="media/css/style.css" />
 		<link rel="stylesheet" href="media/css/prepare_style.css" />
