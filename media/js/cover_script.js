@@ -25,10 +25,7 @@ var ResizableCanvas = (function() {
 		this._id = params.id;
 		this._width = params.width;
 		this._height = params.height;
-		this._extractWidth = params.extractWidth || params.width;
-		this._extractHeight = params.extractHeight || params.height;
-		this._extractExpand = params.extractExpand;
-		this._extractExtraGap = params.extractExtraGap;
+		this._extractRatio = params.extractRatio || 1;
 
 		this._links = {};
 		this._fullWidth = params.width;
@@ -223,21 +220,15 @@ var ResizableCanvas = (function() {
 			return this._propagate(function() {
 				var saveCanvas = $(this._id);
 
-				if(this._extractWidth !== this._width || this._extractHeight !== this._height) {
+				if(this._extractRatio !== 1) {
 					saveCanvas = c('canvas', {
 						attributes : {
-							width : this._extractWidth,
-							height : this._extractHeight
+							width : this._width * this._extractRatio,
+							height : this._height * this._extractRatio
 						}
 					});
 
-					var xgap = this._extractExtraGap, ygap = xgap;
-					if(!this._extractExpand) {
-						xgap += (this._extractWidth - this._width) / 2;
-						ygap += (this._extractHeight - this._height) / 2;
-					}
-
-					this._draw(saveCanvas.getContext('2d'), 1, xgap, ygap);
+					this._draw(saveCanvas.getContext('2d'), 1/this._extractRatio);
 				}
 
 				(function(canvas, maxWeight, callback) {
@@ -302,21 +293,6 @@ window.cleverCover = (function() {
 				canvas = {};
 
 			switch(type) {
-				case 'google':
-					params.cover = {
-						width : 940,
-						height : 180
-					};
-					params.avatar = {
-						width : 250,
-						height : 250
-					};
-					params.link = {
-						left : 627,
-						top : -39
-					};
-					break;
-
 				case 'facebook':
 					params.cover = {
 						width : 851,
@@ -326,13 +302,11 @@ window.cleverCover = (function() {
 					params.avatar = {
 						width : 160,
 						height : 160,
-						extractWidth : 180,
-						extractHeight : 180,
-						extractExtraGap : 1
+						extractRatio : 180/160
 					};
 					params.link = !special ? {
-						left : 29,
-						top : 200
+						left : 20,
+						top : 177
 					} : {
 						left : 18,
 						top : 228

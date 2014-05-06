@@ -65,7 +65,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			<div class="social-network facebook">
 				<div id="fb-root"></div>
 				<div class="fb-like" data-href="<?= $siteUrl ?>" data-send="false" data-layout="button_count" data-width="100" data-show-faces="false"></div>
-				<script type="text/javascript">asyncjs('http://connect.facebook.net/fr_FR/all.js#xfbml=1', 'facebook-jssdk');</script>
+				<script type="text/javascript">asyncjs('https://connect.facebook.net/fr_FR/all.js#xfbml=1', 'facebook-jssdk');</script>
 			</div>
 			<div class="social-network google">
 				<div class="g-plusone" data-annotation="none" data-href="<?= $siteUrl ?>"></div>
@@ -73,11 +73,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			</div>
 			<div class="social-network twitter">
 				<a href="https://twitter.com/share" class="twitter-share-button" data-url="<?= $siteUrl ?>" data-text="CleverCover" data-via="korkof" data-related="korkof">Tweet</a>
-				<script type="text/javascript">asyncjs('http://platform.twitter.com/widgets.js', 'twitter-wjs');</script>
-			</div>
-			<div class="social-network stumble">
-				<su:badge layout="2" location="<?= $siteUrl ?>"></su:badge>
-				<script type="text/javascript">asyncjs('https://platform.stumbleupon.com/1/widgets.js');</script>
+				<script type="text/javascript">asyncjs('https://platform.twitter.com/widgets.js', 'twitter-wjs');</script>
 			</div>
 
 			<div id="save" class="button">Save</div>

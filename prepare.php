@@ -53,7 +53,6 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			<h1>Clever Cover</h1>
 		</div>
 		<div id="examples">
-			<img src="media/image/example_google.png" title="Example of what CleverCover will help you realize" class="thumb" />
 			<img src="media/image/example_facebook.png" title="Example of what CleverCover will help you realize" class="thumb" />
 			<img src="media/image/example_twitter.png" title="Example of what CleverCover will help you realize" class="thumb" />
 		</div>
@@ -61,7 +60,6 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			<div id="step_site" class="step active">
 				<p class="description">CleverCover helps you to generate easily and fastly a funny and original cover. In order to start, choose which platform you want a cover for.</p>
 				<div class="content">
-					<a href="#" data-value="google"><img src="media/image/Google.png" alt="Google" title="Google" /></a>
 					<a href="#" data-value="facebook"><img src="media/image/Facebook.png" alt="Facebook" title="Facebook" /></a>
 					<a href="#" data-value="twitter"><img src="media/image/Twitter.png" alt="Twitter" title="Twitter" /></a>
 				</div>
@@ -129,7 +127,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 		</div>
                 <div id="comments">
                         <p>Why not leave a message for other users or the developer?</p>
-			<script type="text/javascript">asyncjs('http://connect.facebook.net/fr_FR/all.js#xfbml=1', 'facebook-jssdk');</script>
+			<script type="text/javascript">asyncjs('https://connect.facebook.net/fr_FR/all.js#xfbml=1', 'facebook-jssdk');</script>
                         <div class="fb-comments" data-href="<?= $siteUrl ?>" data-num-posts="2" data-width="470"></div>
                 </div>
 		<script type="text/javascript">
@@ -138,7 +136,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			_gaq.push(['_setDomainName', 'korko.fr']);
 			_gaq.push(['_trackPageview']);
 
-			asyncjs('http://www.google-analytics.com/ga.js');
+			asyncjs('https://www.google-analytics.com/ga.js');
 		</script>
 		<script type="text/javascript">
 			var on = function() {
