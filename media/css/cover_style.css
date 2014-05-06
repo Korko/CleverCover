@@ -39,11 +39,6 @@ body {
 	margin-top: -11px;
 	width: 90px;
 }
-#bluebar .social-network.stumble {
-	height: 22px;
-	margin-top: -11px;
-	width: 65px;
-}
 
 #content {
 	width: 853px;
@@ -64,6 +59,7 @@ body {
 }
 #content_inner.facebook.special #canvas_picture {
 	top: 211px;
+	left: 23px;
 }
 #content_inner.twitter #canvas_picture {
 	border: 4px solid white;

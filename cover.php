@@ -153,7 +153,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 			_gaq.push(['_setDomainName', 'korko.fr']);
 			_gaq.push(['_trackPageview']);
 
-			asyncjs('http://www.google-analytics.com/ga.js');
+			asyncjs('https://www.google-analytics.com/ga.js');
 		</script>
 	</body>
 </html>

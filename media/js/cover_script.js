@@ -308,8 +308,8 @@ window.cleverCover = (function() {
 						left : 20,
 						top : 177
 					} : {
-						left : 18,
-						top : 228
+						left : 28,//23 + 5px (padding/border)
+						top : 216//211 + 5px (padding/border)
 					};
 					break;
 
