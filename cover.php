@@ -10,6 +10,7 @@ $cover = filter_var($_REQUEST['cover'], FILTER_VALIDATE_URL) or die('Invalid cov
 $avatar = isset($_REQUEST['avatar']) ? filter_var($_REQUEST['avatar'], FILTER_VALIDATE_URL) : false;
 
 $special = isset($_REQUEST['special']) && $_REQUEST['special'] ? 1 : 0;
+$specialDesign = isset($_REQUEST['special_design']) && $_REQUEST['special_design'] ? 1 : 0;
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
 
@@ -137,13 +138,14 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				var site='<?= $site ?>',
 				    cover='<?= $cover ?>',
 				    avatar=<?php echo !$avatar ? "null" : "'".$avatar."'"; ?>,
-				    special=<?= $special ?>;
+				    special=<?= $special ?>,
+				    special_design=<?= $specialDesign ?>;
 				cleverCover.init(site, cover, avatar, function(success) {
 					popup.close();
 					if(!success) {
-						window.location.href = location.href.substr(0, location.href.lastIndexOf('/')+1)+'?site='+site+'&special='+special;
+						window.location.href = location.href.substr(0, location.href.lastIndexOf('/')+1)+'?site='+site+'&special='+special+'&special_design='+special_design;
 					}
-				}, special);
+				}, special, special_design);
 			});
 		</script>
 

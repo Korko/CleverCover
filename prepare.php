@@ -99,6 +99,21 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 					</span>
 				</div>
 			</script>
+                        <script id="template_special_design" type="template/html">
+                                <p class="description">Which design do you have?</p>
+                                <div class="content">
+                                        <span>
+                                                <a class="button" href="#" data-value="0">
+                                                        Old design
+                                                </a>
+                                        </span>
+                                        <span>
+                                                <a class="button" href="#" data-value="1">
+                                                        New design
+                                                </a>
+                                        </span>
+                                </div>
+                        </script>
 			<script id="template_linked_image_origin" type="template/html">
 				<p class="description">Select the image you want in your cover and in your avatar</p>
 				<div class="content">
@@ -150,9 +165,9 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				.on('change', '.step.active input[data-value]', on);
 
 			<?php
-				function jsescape($str) { return str_replace("'", "\'", $str); };
+				function jsescape($str) { return is_numeric($str) ? $str : var_export(str_replace("'", "\'", $str), TRUE); };
 				foreach($_GET as $choice => $value) {
-					echo "choose('".jsescape($choice)."', '".jsescape($value)."');\n";
+					echo "choose(".jsescape($choice).", ".jsescape($value).");\n";
 				}
 			?>
 		</script>

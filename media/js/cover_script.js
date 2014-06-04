@@ -287,7 +287,7 @@ window.cleverCover = (function() {
 	};
 
 	return {
-		init : function(type, url_cover, url_avatar, callback, special) {
+		init : function(type, url_cover, url_avatar, callback, special, special_design) {
 			var splited = !!url_avatar,
 				slider_choice = 'cover',
 				canvas = {};
@@ -307,6 +307,9 @@ window.cleverCover = (function() {
 					params.link = !special ? {
 						left : 20,
 						top : 177
+					} : special_design ? {
+						left : 20,//15 + 5px
+						top : 180//175 + 5px
 					} : {
 						left : 28,//23 + 5px (padding/border)
 						top : 216//211 + 5px (padding/border)
@@ -343,7 +346,7 @@ window.cleverCover = (function() {
 
 			jQuery((function($) {
 				$('#content').addClass(splited ? 'splited' : '');
-				$('#content_inner').addClass(type+' '+(special ? 'special' : ''));
+				$('#content_inner').addClass(type+' '+(special ? (special_design ? 'specialNew' : 'special') : ''));
 				$('#save').click(function() {
 					var data = [];
 					canvas['cover'].save(function(coverData) {

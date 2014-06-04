@@ -48,7 +48,10 @@ jQuery.fn.extend({
 		site: function(params) {
 			return params['site'] === 'facebook' ? 'special' : 'linked_image_origin';
 		},
-		special: 'linked_image_origin', 
+		special: function(params) {
+			return params['special'] === 1 ? 'special_design' : 'linked_image_origin';
+		},
+		special_design: 'linked_image_origin', 
 		//splited: function(params) {
 		//	return params['splited'] ? 'splited_cover' : 'linked_image_origin';
 		//},
