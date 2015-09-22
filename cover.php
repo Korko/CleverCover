@@ -148,14 +148,5 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				}, special, special_design);
 			});
 		</script>
-
-		<script type="text/javascript">
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-22420319-1']);
-			_gaq.push(['_setDomainName', 'korko.fr']);
-			_gaq.push(['_trackPageview']);
-
-			asyncjs('https://www.google-analytics.com/ga.js');
-		</script>
 	</body>
 </html>
