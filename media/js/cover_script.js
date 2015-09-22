@@ -236,8 +236,8 @@ var ResizableCanvas = (function() {
 	                                        // L'image de la couverture que nous pourrons sauvegarder est en fait une chaîne sous forme base64
         	                                // e.g. data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAgA...
                 	                        // Fonctionnalité permise par un canvas si l'origine de l'image est sûre (même domaine) d'où le fichier php "img.php" plus bas
-                        	                data = saveCanvas.toDataURL('image/jpeg', compression);
-                                	        (this._maxWeight && getImageWeight(data, function(size) {
+						data = saveCanvas.toDataURL('image/png', compression);
+						(this._maxWeight && getImageWeight(data, function(size) {
 							if(size !== oldSize && size > maxWeight) {
 								loopfn(compression + 0.1, size);
 							} else {
@@ -363,13 +363,16 @@ window.cleverCover = (function() {
 					function fncb() {
 						var div = $('<div>');
 						$.each(data, function(id, data) {
-							var node = c('img');
-							node.style.height = '100px';
-							node.setAttribute('src', data);
-							$(node).bind('click', function() {
-								jQuery.download('img.php', 'src='+data);
-							});
-							div.append(node);
+							var img = c('img');
+							img.style.height = '100px';
+							img.setAttribute('src', data);
+
+							var anchor = c('a');
+							anchor.setAttribute('href', data);
+							anchor.setAttribute('download', id === 0 ? 'cover.png' : 'avatar.png');
+							anchor.appendChild(img);
+
+							div.append(anchor);
 						});
 
 						var content = $('<p>Here\'s your avatar and your cover, just save them by clicking on each one and put them directly to your favorite social network.</p>');
