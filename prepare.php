@@ -2,16 +2,16 @@
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
 
-$css = array(
-	'style',
-	'prepare_style'
-);
-$js = array(
-	'jquery-1.8.0.min',
-	'jquery.support',
-	'toolbox',
-	'prepare_script'
-);
+$css = [
+    'style',
+    'prepare_style',
+];
+$js = [
+    'jquery-1.8.0.min',
+    'jquery.support',
+    'toolbox',
+    'prepare_script',
+];
 
 ?>
 <!DOCTYPE html>
@@ -36,16 +36,16 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 		<link rel="stylesheet" href="media/css/style.css" />
 		<link rel="stylesheet" href="media/css/prepare_style.css" />
 <?php
-		foreach($css as $style) {
-			$path = 'media/css/'.$style.'.css';
-			$stats = stat($path);
-			echo '<link rel="stylesheet" href="'.$path.'?mtime='.($stats['mtime']).'" />';
-		}
-		foreach($js as $script) {
-			$path = 'media/js/'.$script.'.js';
-			$stats = stat($path);
-			echo '<script type="text/javascript" src="'.$path.'?mtime='.($stats['mtime']).'"></script>';
-		}
+        foreach ($css as $style) {
+            $path = 'media/css/'.$style.'.css';
+            $stats = stat($path);
+            echo '<link rel="stylesheet" href="'.$path.'?mtime='.($stats['mtime']).'" />';
+        }
+        foreach ($js as $script) {
+            $path = 'media/js/'.$script.'.js';
+            $stats = stat($path);
+            echo '<script type="text/javascript" src="'.$path.'?mtime='.($stats['mtime']).'"></script>';
+        }
 ?>
 		<title>CleverCover - Prepare</title>
 	</head>
@@ -165,11 +165,14 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				.on('change', '.step.active input[data-value]', on);
 
 			<?php
-				function jsescape($str) { return is_numeric($str) ? $str : var_export(str_replace("'", "\'", $str), TRUE); };
-				foreach($_GET as $choice => $value) {
-					echo "choose(".jsescape($choice).", ".jsescape($value).");\n";
-				}
-			?>
+                function jsescape($str)
+                {
+                    return is_numeric($str) ? $str : var_export(str_replace("'", "\'", $str), true);
+                };
+                foreach ($_GET as $choice => $value) {
+                    echo 'choose('.jsescape($choice).', '.jsescape($value).");\n";
+                }
+            ?>
 		</script>
 	</body>
 </html>

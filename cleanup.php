@@ -3,13 +3,13 @@
 
 $dir = 'tmp/';
 $files = scandir($dir);
-$delay = time() - 2*60;
+$delay = time() - 2 * 60;
 
-foreach($files as $file) {
-	if(strpos($file, '.png') !== false && filemtime($dir.$file) <= $delay) {
-		echo $dir.$file."\n";
-		unlink($dir.$file);
-	}
+foreach ($files as $file) {
+    if (strpos($file, '.png') !== false && filemtime($dir.$file) <= $delay) {
+        echo $dir.$file."\n";
+        unlink($dir.$file);
+    }
 }
 
 ?>
