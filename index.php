@@ -1,3 +1,3 @@
 <?php
 
-include('prepare.php');
+include 'prepare.php';

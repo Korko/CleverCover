@@ -1,11 +1,12 @@
 <?php
 
 // Sanitize params
-function filter_enum($var, $enum, $default = null) {
-	return in_array($var, $enum) ? $var : $default;
+function filter_enum($var, $enum, $default = null)
+{
+    return in_array($var, $enum) ? $var : $default;
 }
 
-$site = filter_enum($_REQUEST['site'], array('facebook', 'google', 'twitter'), 'facebook');
+$site = filter_enum($_REQUEST['site'], ['facebook', 'google', 'twitter'], 'facebook');
 $cover = filter_var($_REQUEST['cover'], FILTER_VALIDATE_URL) or die('Invalid cover url');
 $avatar = isset($_REQUEST['avatar']) ? filter_var($_REQUEST['avatar'], FILTER_VALIDATE_URL) : false;
 
@@ -14,24 +15,24 @@ $specialDesign = isset($_REQUEST['special_design']) && $_REQUEST['special_design
 
 $siteUrl = 'http://www.korko.fr/clevercover/';
 
-$css = array(
-	'style',
-	'cover_style',
-	'pageguide.min',
-	'smoothness/jquery-ui-1.8.23.custom'
-);
-$js = array(
-	'StackBlur',
-	'jquery-1.8.0.min',
-	'jquery-ui-1.8.23.min',
-	'jquery.support',
-	'jquery.drag',
-	'jquery.identify',
-	'pageguide.min',
-	'toolbox',
-	'popup',
-	'cover_script'
-);
+$css = [
+    'style',
+    'cover_style',
+    'pageguide.min',
+    'smoothness/jquery-ui-1.8.23.custom',
+];
+$js = [
+    'StackBlur',
+    'jquery-1.8.0.min',
+    'jquery-ui-1.8.23.min',
+    'jquery.support',
+    'jquery.drag',
+    'jquery.identify',
+    'pageguide.min',
+    'toolbox',
+    'popup',
+    'cover_script',
+];
 
 ?>
 <!DOCTYPE html>
@@ -48,16 +49,16 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <?php
-		foreach($css as $style) {
-			$path = 'media/css/'.$style.'.css';
-			$stats = stat($path);
-			echo '<link rel="stylesheet" href="'.$path.'?mtime='.($stats['mtime']).'" />';
-		}
-		foreach($js as $script) {
-			$path = 'media/js/'.$script.'.js';
-			$stats = stat($path);
-			echo '<script type="text/javascript" src="'.$path.'?mtime='.($stats['mtime']).'"></script>';
-		}
+        foreach ($css as $style) {
+            $path = 'media/css/'.$style.'.css';
+            $stats = stat($path);
+            echo '<link rel="stylesheet" href="'.$path.'?mtime='.($stats['mtime']).'" />';
+        }
+        foreach ($js as $script) {
+            $path = 'media/js/'.$script.'.js';
+            $stats = stat($path);
+            echo '<script type="text/javascript" src="'.$path.'?mtime='.($stats['mtime']).'"></script>';
+        }
 ?>
 		<title>CleverCover</title>
 	</head>
@@ -137,7 +138,7 @@ this stuff is worth it, you can buy me a beer in return. Jeremy Lemesle
 				tl.pg.init();
 				var site='<?= $site ?>',
 				    cover='<?= $cover ?>',
-				    avatar=<?php echo !$avatar ? "null" : "'".$avatar."'"; ?>,
+				    avatar=<?php echo !$avatar ? 'null' : "'".$avatar."'"; ?>,
 				    special=<?= $special ?>,
 				    special_design=<?= $specialDesign ?>;
 				cleverCover.init(site, cover, avatar, function(success) {
